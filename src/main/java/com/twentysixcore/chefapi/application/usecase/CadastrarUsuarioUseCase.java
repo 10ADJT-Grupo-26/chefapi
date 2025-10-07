@@ -2,11 +2,11 @@ package com.twentysixcore.chefapi.application.usecase;
 
 import com.twentysixcore.chefapi.application.dto.UsuarioCriadoDTO;
 import com.twentysixcore.chefapi.application.dto.UsuarioResponseDTO;
-import com.twentysixcore.chefapi.domain.Endereco;
-import com.twentysixcore.chefapi.domain.Senha;
-import com.twentysixcore.chefapi.domain.Usuario;
-import com.twentysixcore.chefapi.domain.event.UsuarioCriado;
-import com.twentysixcore.chefapi.domain.repository.UsuarioRepository;
+import com.twentysixcore.chefapi.application.domain.Endereco;
+import com.twentysixcore.chefapi.application.domain.Senha;
+import com.twentysixcore.chefapi.application.domain.Usuario;
+import com.twentysixcore.chefapi.application.domain.event.UsuarioCriado;
+import com.twentysixcore.chefapi.application.domain.repository.UsuarioRepository;
 import com.twentysixcore.chefapi.infrastructure.event.DomainEventPublisher;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
