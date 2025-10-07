@@ -1,6 +1,6 @@
-package com.twentysixcore.chefapi.domain.repository;
+package com.twentysixcore.chefapi.application.domain.repository;
 
-import com.twentysixcore.chefapi.domain.Usuario;
+import com.twentysixcore.chefapi.application.domain.Usuario;
 
 import java.util.Optional;
 

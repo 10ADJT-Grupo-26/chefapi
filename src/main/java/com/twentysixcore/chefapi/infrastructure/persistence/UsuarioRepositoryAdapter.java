@@ -1,9 +1,9 @@
 package com.twentysixcore.chefapi.infrastructure.persistence;
 
-import com.twentysixcore.chefapi.domain.Endereco;
-import com.twentysixcore.chefapi.domain.TipoUsuario;
-import com.twentysixcore.chefapi.domain.Usuario;
-import com.twentysixcore.chefapi.domain.repository.UsuarioRepository;
+import com.twentysixcore.chefapi.application.domain.Endereco;
+import com.twentysixcore.chefapi.application.domain.TipoUsuario;
+import com.twentysixcore.chefapi.application.domain.Usuario;
+import com.twentysixcore.chefapi.application.domain.repository.UsuarioRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
