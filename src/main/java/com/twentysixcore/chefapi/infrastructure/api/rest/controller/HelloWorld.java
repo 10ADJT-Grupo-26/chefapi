@@ -1,4 +1,4 @@
-package com.twentysixcore.chefapi.infrastructure.rest.controller;
+package com.twentysixcore.chefapi.infrastructure.api.rest.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

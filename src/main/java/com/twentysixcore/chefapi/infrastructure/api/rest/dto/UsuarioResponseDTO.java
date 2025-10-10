@@ -1,4 +1,4 @@
-package com.twentysixcore.chefapi.application.dto;
+package com.twentysixcore.chefapi.infrastructure.api.rest.dto;
 
 import com.twentysixcore.chefapi.application.domain.Endereco;
 import com.twentysixcore.chefapi.application.domain.TipoUsuario;
