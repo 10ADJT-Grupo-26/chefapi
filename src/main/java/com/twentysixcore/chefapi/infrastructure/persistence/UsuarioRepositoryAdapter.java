@@ -30,6 +30,11 @@ public class UsuarioRepositoryAdapter implements UsuarioRepository {
         return repo.findByEmail(email).map(this::toDomain);
     }
 
+    @Override
+    public Optional<Usuario> buscarPorId(UUID id) {
+        return repo.findById(id).map(this::toDomain);
+    }
+
     private Usuario toDomain(UsuarioEntity e) {
         Endereco end = new Endereco(e.getRua(), e.getNumero(), e.getCidade(), e.getCep(), e.getUf());
         Usuario u = new Usuario();
