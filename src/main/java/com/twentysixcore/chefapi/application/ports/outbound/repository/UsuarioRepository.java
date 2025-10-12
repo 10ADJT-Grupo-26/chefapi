@@ -1,4 +1,4 @@
-package com.twentysixcore.chefapi.application.domain.repository;
+package com.twentysixcore.chefapi.application.ports.outbound.repository;
 
 import com.twentysixcore.chefapi.application.domain.Usuario;
 

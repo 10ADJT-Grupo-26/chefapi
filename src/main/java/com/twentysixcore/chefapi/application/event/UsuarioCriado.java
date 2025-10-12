@@ -1,4 +1,4 @@
-package com.twentysixcore.chefapi.application.domain.event;
+package com.twentysixcore.chefapi.application.event;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 

@@ -1,0 +1,79 @@
+@startuml "Arquitetura Hexagonal - Tech Challenge"
+
+!theme vibrant
+
+title Arquitetura Hexagonal - Tech Challenge
+
+package "Domain (Core)" <<Hexagon>> #LightYellow {
+  package "model" {
+    class Usuario
+    class Endereco
+    enum TipoUsuario
+  }
+}
+
+package "Application (Use Cases)" #LightBlue {
+  package "ports" {
+    package "in (Driving Ports)" {
+      interface CadastrarUsuario
+      ' ... outros casos de uso
+    }
+    package "out (Driven Ports)" {
+      interface UsuarioRepository
+      interface SenhaEncoder
+    }
+  }
+  package "usecase" {
+    class CadastrarUsuarioUseCase {
+      + executar()
+    }
+  }
+}
+
+package "Infrastructure (Adapters)" <<Cloud>> #LightGrey {
+  package "rest (Driving Adapter)" {
+    class UsuarioController
+    package "dto" {
+      class UsuarioRequestDTO
+      class UsuarioResponseDTO
+    }
+  }
+  package "db (Driven Adapter)" {
+    class UsuarioRepositoryAdapter
+    package "jpa" {
+        interface UsuarioJPARepository
+    }
+  }
+
+  package "seguranca" {
+      class BCryptSenhaEncoder
+  }
+}
+
+
+
+' --- Relacionamentos e Dependências ---
+
+' Infrastructure depende da camada de Application
+UsuarioController ..> CadastrarUsuario : chama
+UsuarioRepositoryAdapter ..|> UsuarioRepository : implementa
+UsuarioRepositoryAdapter --> UsuarioJPARepository : utiliza
+
+' Application depende da camada de Domain
+CadastrarUsuarioUseCase ..|> CadastrarUsuario : implementa
+CadastrarUsuarioUseCase --> UsuarioRepository : utiliza
+CadastrarUsuarioUseCase --> SenhaEncoder : utiliza
+CadastrarUsuarioUseCase --> Usuario : manipula
+
+' Infraestrutura depende do domain (interfaces)
+BCryptSenhaEncoder ..|> SenhaEncoder : implementa
+
+' Domain depende de domain
+Usuario --> TipoUsuario : usa
+Usuario --> Endereco : usa
+
+' Setas de dependência explícitas entre as camadas principais
+Infrastructure -right-> Application : depende de
+Application -right-> Domain : depende de
+
+@enduml

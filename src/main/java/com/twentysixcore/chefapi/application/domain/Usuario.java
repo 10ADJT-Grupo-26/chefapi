@@ -13,12 +13,12 @@ public class Usuario {
     private Endereco endereco;
     private OffsetDateTime dataUltimaAlteracao;
 
-    public Usuario(String nome, String email, String login, Senha senha, TipoUsuario tipo, Endereco endereco) {
+    public Usuario(String nome, String email, String login, String senha, TipoUsuario tipo, Endereco endereco) {
         this.id = UUID.randomUUID();
         this.nome = nome;
         this.email = email;
         this.login = login;
-        this.passwordHash = senha != null ? senha.getHash() : null;
+        this.passwordHash = senha;
         this.tipo = tipo;
         this.endereco = endereco;
         this.dataUltimaAlteracao = OffsetDateTime.now();
@@ -50,9 +50,9 @@ public class Usuario {
     public OffsetDateTime getDataUltimaAlteracao() { return dataUltimaAlteracao; }
     public void setDataUltimaAlteracao(OffsetDateTime dataUltimaAlteracao) { this.dataUltimaAlteracao = dataUltimaAlteracao; }
 
-    public void alterarSenha(Senha novaSenha) {
+    public void alterarSenha(String novaSenha) {
         if (novaSenha == null) throw new IllegalArgumentException("Nova senha não pode ser nula");
-        this.passwordHash = novaSenha.getHash();
+        this.passwordHash = novaSenha;
         this.dataUltimaAlteracao = OffsetDateTime.now();
     }
 
