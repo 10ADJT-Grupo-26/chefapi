@@ -35,6 +35,16 @@ public class UsuarioRepositoryAdapter implements UsuarioRepository {
         return repo.findById(id).map(this::toDomain);
     }
 
+    @Override
+    public boolean existePorId(UUID id) {
+        return repo.existsById(id);
+    }
+
+    @Override
+    public void deletarPorId(UUID id) {
+        repo.deleteById(id);
+    }
+
     private Usuario toDomain(UsuarioEntity e) {
         Endereco end = new Endereco(e.getRua(), e.getNumero(), e.getCidade(), e.getCep(), e.getUf());
         Usuario u = new Usuario();

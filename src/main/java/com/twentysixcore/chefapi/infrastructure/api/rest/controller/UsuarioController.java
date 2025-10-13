@@ -1,6 +1,7 @@
 package com.twentysixcore.chefapi.infrastructure.api.rest.controller;
 
 import com.twentysixcore.chefapi.application.ports.inbound.usecase.BuscarUsuarioPorId;
+import com.twentysixcore.chefapi.application.ports.inbound.usecase.DeletarUsuarioPorId;
 import com.twentysixcore.chefapi.application.usecase.BuscarUsuarioPorIdUseCase;
 import com.twentysixcore.chefapi.infrastructure.api.rest.dto.UsuarioRequestDTO;
 import com.twentysixcore.chefapi.infrastructure.api.rest.dto.UsuarioResponseDTO;
@@ -19,10 +20,12 @@ public class UsuarioController {
 
     private final CadastrarUsuario cadastrar;
     private final BuscarUsuarioPorId buscar;
+    private final DeletarUsuarioPorId deletar;
 
-    public UsuarioController(CadastrarUsuarioUseCase cadastrar,  BuscarUsuarioPorIdUseCase buscar) {
+    public UsuarioController(CadastrarUsuarioUseCase cadastrar, BuscarUsuarioPorIdUseCase buscar, DeletarUsuarioPorId deletar) {
         this.cadastrar = cadastrar;
         this.buscar = buscar;
+        this.deletar = deletar;
     }
 
     @PostMapping
@@ -35,5 +38,11 @@ public class UsuarioController {
     public ResponseEntity<UsuarioResponseDTO> buscarPorId(@PathVariable("id") UUID id) {
         UsuarioResponseDTO response = buscar.executar(id);
         return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarPorId(@PathVariable("id") UUID id) {
+        deletar.executar(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
