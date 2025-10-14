@@ -7,6 +7,7 @@ import com.twentysixcore.chefapi.application.ports.inbound.usecase.BuscarUsuario
 import com.twentysixcore.chefapi.application.ports.outbound.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -24,9 +25,9 @@ public class BuscarUsuarioPorIdUseCase implements BuscarUsuarioPorId {
     @Override
     public UsuarioOutput executar(UUID id) {
         Optional<Usuario> optUsuario = usuarioRepository.buscarPorId(id);
-        if (optUsuario.isEmpty()) {
-            throw new IllegalArgumentException("Usuário não existe");
-        }
+        if (optUsuario.isEmpty())
+            throw new NoSuchElementException("Nenhum usuário encontrado com o id: " + id);
+
         return mapper.toOutput(optUsuario.get());
     }
 }
