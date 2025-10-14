@@ -1,5 +1,6 @@
 package com.twentysixcore.chefapi.infrastructure.api.rest.controller;
 
+import com.twentysixcore.chefapi.application.ports.inbound.dto.UsuarioOutput;
 import com.twentysixcore.chefapi.application.ports.inbound.usecase.BuscarUsuarioPorId;
 import com.twentysixcore.chefapi.application.ports.inbound.usecase.DeletarUsuarioPorId;
 import com.twentysixcore.chefapi.application.usecase.BuscarUsuarioPorIdUseCase;
@@ -7,6 +8,7 @@ import com.twentysixcore.chefapi.infrastructure.api.rest.dto.UsuarioRequestDTO;
 import com.twentysixcore.chefapi.infrastructure.api.rest.dto.UsuarioResponseDTO;
 import com.twentysixcore.chefapi.application.ports.inbound.usecase.CadastrarUsuario;
 import com.twentysixcore.chefapi.application.usecase.CadastrarUsuarioUseCase;
+import com.twentysixcore.chefapi.infrastructure.api.rest.mapper.UsuarioApiMapper;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,23 +23,25 @@ public class UsuarioController {
     private final CadastrarUsuario cadastrar;
     private final BuscarUsuarioPorId buscar;
     private final DeletarUsuarioPorId deletar;
+    private final UsuarioApiMapper mapper;
 
-    public UsuarioController(CadastrarUsuarioUseCase cadastrar, BuscarUsuarioPorIdUseCase buscar, DeletarUsuarioPorId deletar) {
+    public UsuarioController(CadastrarUsuarioUseCase cadastrar, BuscarUsuarioPorIdUseCase buscar, DeletarUsuarioPorId deletar, UsuarioApiMapper mapper) {
         this.cadastrar = cadastrar;
         this.buscar = buscar;
         this.deletar = deletar;
+        this.mapper = mapper;
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioResponseDTO> criar(@Valid @RequestBody UsuarioRequestDTO dto) {
-        UsuarioResponseDTO resp = cadastrar.executar(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
+    public ResponseEntity<UsuarioResponseDTO> criar(@Valid @RequestBody UsuarioRequestDTO request) {
+        UsuarioOutput usuario = cadastrar.executar(mapper.toInput(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(usuario));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioResponseDTO> buscarPorId(@PathVariable("id") UUID id) {
-        UsuarioResponseDTO response = buscar.executar(id);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        UsuarioOutput usuario = buscar.executar(id);
+        return ResponseEntity.status(HttpStatus.OK).body(mapper.toResponse(usuario));
     }
 
     @DeleteMapping("/{id}")
