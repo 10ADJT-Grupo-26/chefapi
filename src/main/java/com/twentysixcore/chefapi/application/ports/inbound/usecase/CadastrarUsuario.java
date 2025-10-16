@@ -1,8 +1,8 @@
 package com.twentysixcore.chefapi.application.ports.inbound.usecase;
 
-import com.twentysixcore.chefapi.infrastructure.api.rest.dto.UsuarioRequestDTO;
-import com.twentysixcore.chefapi.infrastructure.api.rest.dto.UsuarioResponseDTO;
+import com.twentysixcore.chefapi.application.ports.inbound.dto.CadastrarUsuarioInput;
+import com.twentysixcore.chefapi.application.ports.inbound.dto.UsuarioOutput;
 
 public interface CadastrarUsuario {
-    UsuarioResponseDTO executar(UsuarioRequestDTO dto);
+    UsuarioOutput executar(CadastrarUsuarioInput dto);
 }

@@ -1,17 +1,15 @@
 package com.twentysixcore.chefapi.infrastructure.api.rest.dto;
 
-import com.twentysixcore.chefapi.application.domain.Endereco;
-import com.twentysixcore.chefapi.application.domain.TipoUsuario;
-
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
 public record UsuarioResponseDTO(
-                                 UUID id,
-                                 String nome,
-                                 String email,
-                                 String login,
-                                 TipoUsuario tipo,
-                                 Endereco endereco,
-                                 OffsetDateTime dataUltimaAlteracao
-) {}
+        UUID id,
+        String nome,
+        String email,
+        String login,
+        String  tipo,
+        EnderecoDTO endereco,
+        OffsetDateTime dataUltimaAlteracao
+) {
+}

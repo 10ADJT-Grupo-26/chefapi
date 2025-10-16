@@ -1,9 +1,9 @@
 package com.twentysixcore.chefapi.application.ports.inbound.usecase;
 
-import com.twentysixcore.chefapi.infrastructure.api.rest.dto.UsuarioResponseDTO;
+import com.twentysixcore.chefapi.application.ports.inbound.dto.UsuarioOutput;
 
 import java.util.UUID;
 
 public interface BuscarUsuarioPorId {
-    UsuarioResponseDTO executar(UUID id);
+    UsuarioOutput executar(UUID id);
 }
