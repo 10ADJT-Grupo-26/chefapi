@@ -4,30 +4,57 @@ import com.twentysixcore.chefapi.application.domain.Endereco;
 import com.twentysixcore.chefapi.application.domain.TipoUsuario;
 import com.twentysixcore.chefapi.application.domain.Usuario;
 import com.twentysixcore.chefapi.application.domain.repository.UsuarioRepository;
+import com.twentysixcore.chefapi.application.dto.UsuarioResponseDTO;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class UsuarioRepositoryAdapter implements UsuarioRepository {
 
-    private final UsuarioJPARepository repo;
+    private final UsuarioJPARepository usuarioRepository;
 
-    public UsuarioRepositoryAdapter(UsuarioJPARepository repo) {
-        this.repo = repo;
+    public UsuarioRepositoryAdapter(UsuarioJPARepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Override
     public Usuario salvar(Usuario usuario) {
         UsuarioEntity e = toEntity(usuario);
-        e = repo.save(e);
+        e = usuarioRepository.save(e);
         return toDomain(e);
     }
+    @Override
+    public List<UsuarioResponseDTO> listarTodosPorParametro(String parametroBusca) {
+        List<UsuarioEntity> entities = usuarioRepository.listarTodosPorParametro(parametroBusca);
 
+        return entities.stream()
+                .map(this::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+    private UsuarioResponseDTO toResponseDTO(UsuarioEntity entity) {
+        return new UsuarioResponseDTO(
+                entity.getId(),
+                entity.getNome(),
+                entity.getEmail(),
+                entity.getLogin(),
+                TipoUsuario.valueOf(entity.getTipo()), // Conversão aqui
+                new Endereco(
+                        entity.getRua(),
+                        entity.getNumero(),
+                        entity.getCidade(),
+                        entity.getCep(),
+                        entity.getUf()
+                ),
+                entity.getDataUltimaAlteracao()
+        );
+    }
     @Override
     public Optional<Usuario> buscarPorEmail(String email) {
-        return repo.findByEmail(email).map(this::toDomain);
+        return usuarioRepository.findByEmail(email).map(this::toDomain);
     }
 
     private Usuario toDomain(UsuarioEntity e) {

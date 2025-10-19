@@ -14,4 +14,5 @@ public record UsuarioResponseDTO(
                                  TipoUsuario tipo,
                                  Endereco endereco,
                                  OffsetDateTime dataUltimaAlteracao
-) {}
+) {
+}

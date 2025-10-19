@@ -1,5 +1,8 @@
 package com.twentysixcore.chefapi.application.domain;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -9,6 +12,7 @@ public class Usuario {
     private String email;
     private String login;
     private String passwordHash;
+    @Enumerated(EnumType.STRING)
     private TipoUsuario tipo;
     private Endereco endereco;
     private OffsetDateTime dataUltimaAlteracao;

@@ -26,7 +26,6 @@ public class UsuarioEntity {
 
     @Column(nullable = false, length = 32)
     private String tipo;
-
     private String rua;
     private String numero;
     private String cidade;
