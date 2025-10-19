@@ -1,7 +1,7 @@
 package com.twentysixcore.chefapi;
 
 import com.twentysixcore.chefapi.application.domain.TipoUsuario;
-import com.twentysixcore.chefapi.application.dto.UsuarioResponseDTO;
+import com.twentysixcore.chefapi.application.ports.inbound.dto.UsuarioOutput;
 import com.twentysixcore.chefapi.infrastructure.persistence.UsuarioEntity;
 import com.twentysixcore.chefapi.infrastructure.persistence.UsuarioJPARepository;
 import com.twentysixcore.chefapi.infrastructure.persistence.UsuarioRepositoryAdapter;
@@ -72,7 +72,7 @@ public class UsuarioRepositoryTest {
         String parametroTeste = "Lucas";
 
         // Act
-        List<UsuarioResponseDTO> results = usuarioRepositoryAdapter.listarTodosPorParametro(parametroTeste);
+        List<UsuarioOutput> results = usuarioRepositoryAdapter.listarTodosPorParametro(parametroTeste);
 
         // Assert
         System.out.println("Resultados encontrados: " + results.size());

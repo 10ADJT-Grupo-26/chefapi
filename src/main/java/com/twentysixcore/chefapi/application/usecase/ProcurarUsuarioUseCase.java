@@ -1,7 +1,7 @@
 package com.twentysixcore.chefapi.application.usecase;
 
-import com.twentysixcore.chefapi.application.domain.repository.UsuarioRepository;
-import com.twentysixcore.chefapi.application.dto.UsuarioResponseDTO;
+import com.twentysixcore.chefapi.application.ports.inbound.dto.UsuarioOutput;
+import com.twentysixcore.chefapi.application.ports.outbound.repository.UsuarioRepository;
 import com.twentysixcore.chefapi.infrastructure.event.DomainEventPublisher;
 import com.twentysixcore.chefapi.infrastructure.persistence.UsuarioJPARepository;
 import jakarta.transaction.Transactional;
@@ -28,8 +28,8 @@ public class ProcurarUsuarioUseCase {
     }
 
     @Transactional
-    public ResponseEntity<List<UsuarioResponseDTO>> executar(String parametroBusca) {
-        List<UsuarioResponseDTO> listaUsuarios = usuarioRepository.listarTodosPorParametro(parametroBusca);
+    public ResponseEntity<List<UsuarioOutput>> executar(String parametroBusca) {
+        List<UsuarioOutput> listaUsuarios = usuarioRepository.listarTodosPorParametro(parametroBusca);
         return ResponseEntity.status(HttpStatus.CREATED).body(listaUsuarios);
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.http.ResponseEntity;
 
 import java.net.URI;
-import java.util.stream.Collectors;
+import java.util.NoSuchElementException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -29,11 +29,19 @@ public class GlobalExceptionHandler {
         Object[] errors = ex.getBindingResult().getFieldErrors()
                 .stream()
                 .map(f -> f.getField() + ": " + f.getDefaultMessage())
-                .collect(Collectors.toList())
+                .toList()
                 .toArray();
         pd.setProperty("errors", errors);
         pd.setType(URI.create("https://example.com/problems/validation-error"));
         return ResponseEntity.badRequest().body(pd);
+    }
+
+    @ExceptionHandler(java.util.NoSuchElementException.class)
+    public ResponseEntity<ProblemDetail> handleNotFound(NoSuchElementException ex) {
+        ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+        pd.setTitle("Not Found");
+        pd.setType(URI.create("https://example.com/problems/not-found"));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(pd);
     }
 }
 

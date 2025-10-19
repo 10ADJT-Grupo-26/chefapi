@@ -1,5 +1,6 @@
 package com.twentysixcore.chefapi.infrastructure.persistence;
 
+import io.micrometer.common.lang.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,6 +11,9 @@ import java.util.UUID;
 
 public interface UsuarioJPARepository extends JpaRepository<UsuarioEntity, UUID> {
     Optional<UsuarioEntity> findByEmail(String email);
+    Optional<UsuarioEntity> findById(@NonNull UUID id);
+    void deleteById(@NonNull UUID id);
+    boolean existsById(@NonNull UUID id);
 
     @Query("""
     SELECT  u
