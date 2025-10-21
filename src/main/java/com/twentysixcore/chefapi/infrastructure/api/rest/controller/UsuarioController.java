@@ -1,9 +1,12 @@
 package com.twentysixcore.chefapi.infrastructure.api.rest.controller;
 
+import com.twentysixcore.chefapi.application.ports.inbound.AlterarSenha;
+import com.twentysixcore.chefapi.application.ports.inbound.dto.AlterarSenhaInput;
 import com.twentysixcore.chefapi.application.ports.inbound.dto.UsuarioOutput;
 import com.twentysixcore.chefapi.application.ports.inbound.usecase.BuscarUsuarioPorId;
 import com.twentysixcore.chefapi.application.ports.inbound.usecase.DeletarUsuarioPorId;
 import com.twentysixcore.chefapi.application.usecase.BuscarUsuarioPorIdUseCase;
+import com.twentysixcore.chefapi.infrastructure.api.rest.dto.AlterarSenhaRequestDTO;
 import com.twentysixcore.chefapi.infrastructure.api.rest.dto.UsuarioRequestDTO;
 import com.twentysixcore.chefapi.infrastructure.api.rest.dto.UsuarioResponseDTO;
 import com.twentysixcore.chefapi.application.ports.inbound.usecase.CadastrarUsuario;
@@ -23,12 +26,14 @@ public class UsuarioController {
     private final CadastrarUsuario cadastrar;
     private final BuscarUsuarioPorId buscar;
     private final DeletarUsuarioPorId deletar;
+    private final AlterarSenha alterarSenha;
     private final UsuarioApiMapper mapper;
 
-    public UsuarioController(CadastrarUsuarioUseCase cadastrar, BuscarUsuarioPorIdUseCase buscar, DeletarUsuarioPorId deletar, UsuarioApiMapper mapper) {
+    public UsuarioController(CadastrarUsuarioUseCase cadastrar, BuscarUsuarioPorIdUseCase buscar, DeletarUsuarioPorId deletar, AlterarSenha alterarSenha, UsuarioApiMapper mapper) {
         this.cadastrar = cadastrar;
         this.buscar = buscar;
         this.deletar = deletar;
+        this.alterarSenha = alterarSenha;
         this.mapper = mapper;
     }
 
@@ -48,5 +53,15 @@ public class UsuarioController {
     public ResponseEntity<Void> deletarPorId(@PathVariable("id") UUID id) {
         deletar.executar(id);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PatchMapping("/alterar-senha")
+    public ResponseEntity<Void> alterarSenha(@Valid @RequestBody AlterarSenhaRequestDTO request) {
+        alterarSenha.executar(new AlterarSenhaInput(
+                request.usuarioId(),
+                request.senhaAtual(),
+                request.novaSenha()
+        ));
+        return ResponseEntity.noContent().build();
     }
 }
