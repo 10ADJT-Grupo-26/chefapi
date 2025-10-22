@@ -10,6 +10,7 @@ import com.twentysixcore.chefapi.application.ports.inbound.dto.UsuarioOutput;
 import com.twentysixcore.chefapi.infrastructure.api.rest.dto.AtualizarUsuarioRequestDTO;
 import com.twentysixcore.chefapi.infrastructure.api.rest.dto.UsuarioRequestDTO;
 import com.twentysixcore.chefapi.infrastructure.api.rest.dto.UsuarioResponseDTO;
+
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
@@ -21,4 +22,8 @@ public interface UsuarioApiMapper {
     UsuarioResponseDTO toResponse(UsuarioOutput output);
 
     AlterarSenhaInput toInput(AlterarSenhaRequestDTO request);
+
+    CadastrarUsuarioInput toInputFromGenerated(com.twentysixcore.chefapi.infrastructure.api.rest.generated.model.UsuarioRequestDTO generatedRequest);
+
+    com.twentysixcore.chefapi.infrastructure.api.rest.generated.model.UsuarioResponseDTO toGeneratedResponse(UsuarioOutput usuario);
 }

@@ -1,0 +1,143 @@
+openapi: 3.0.3
+info:
+  title: Chef API - Usuários
+  version: 1.0.0
+
+paths:
+  /api/v1/usuarios:
+    post:
+      tags: [Usuario]
+      summary: Cadastra um novo usuário
+      operationId: criarUsuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsuarioRequestDTO'
+      responses:
+        '201':
+          description: Usuário criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsuarioResponseDTO'
+
+  /api/v1/usuarios/{id}:
+    get:
+      tags: [Usuario]
+      summary: Busca usuário por ID
+      operationId: buscarUsuarioPorId
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Usuário encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsuarioResponseDTO'
+    delete:
+      summary: Deleta usuário por ID
+      operationId: deletarUsuarioPorId
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Usuário deletado com sucesso
+
+  /api/v1/usuarios/alterar-senha:
+    patch:
+      tags: [Usuario]
+      summary: Altera a senha de um usuário
+      operationId: alterarSenha
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlterarSenhaRequestDTO'
+      responses:
+        '204':
+          description: Senha alterada com sucesso
+
+components:
+  schemas:
+    UsuarioRequestDTO:
+      type: object
+      properties:
+        nome:
+          type: string
+        email:
+          type: string
+        login:
+          type: string
+        senha:
+          type: string
+        tipo:
+          type: string
+        endereco:
+          $ref: '#/components/schemas/EnderecoDTO'
+      required: [nome, email, login, senha, tipo, endereco]
+
+    UsuarioResponseDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        nome:
+          type: string
+        email:
+          type: string
+        login:
+          type: string
+        tipo:
+          type: string
+        endereco:
+          $ref: '#/components/schemas/EnderecoDTO'
+        dataUltimaAlteracao:
+          type: string
+          format: date-time
+      required: [id, nome, email, login, tipo, endereco, dataUltimaAlteracao]
+
+    EnderecoDTO:
+      type: object
+      properties:
+        rua:
+          type: string
+        numero:
+          type: string
+        cidade:
+          type: string
+        cep:
+          type: string
+        uf:
+          type: string
+      required: [rua, numero, cidade, cep, uf]
+
+    AlterarSenhaRequestDTO:
+      type: object
+      properties:
+        usuarioId:
+          type: string
+          format: uuid
+        senhaAtual:
+          type: string
+        novaSenha:
+          type: string
+      required: [usuarioId, senhaAtual, novaSenha]
+
+tags:
+  - name: Usuario
+    description: Operações relacionadas aos usuários
