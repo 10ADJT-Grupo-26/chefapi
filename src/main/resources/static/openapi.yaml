@@ -43,6 +43,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UsuarioResponseDTO'
     delete:
+      tags: [Usuario]
       summary: Deleta usuário por ID
       operationId: deletarUsuarioPorId
       parameters:
