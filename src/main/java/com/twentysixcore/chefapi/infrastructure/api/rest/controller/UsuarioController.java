@@ -57,11 +57,7 @@ public class UsuarioController {
 
     @PatchMapping("/alterar-senha")
     public ResponseEntity<Void> alterarSenha(@Valid @RequestBody AlterarSenhaRequestDTO request) {
-        alterarSenha.executar(new AlterarSenhaInput(
-                request.usuarioId(),
-                request.senhaAtual(),
-                request.novaSenha()
-        ));
+        alterarSenha.executar(mapper.toInput(request));
         return ResponseEntity.noContent().build();
     }
 }
