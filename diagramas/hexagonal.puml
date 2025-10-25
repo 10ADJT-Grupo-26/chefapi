@@ -1,78 +1,90 @@
-@startuml "Arquitetura Hexagonal - Tech Challenge"
+@startuml "Arquitetura Hexagonal - Visão Simplificada"
 
 !theme vibrant
+' Mantendo o espaçamento para uma boa legibilidade
+skinparam nodesep 20
+skinparam ranksep 300
 
-title Arquitetura Hexagonal - Tech Challenge
+title Arquitetura Hexagonal - Visão Simplificada
 
-package "Domain (Core)" <<Hexagon>> #LightYellow {
-  package "model" {
-    class Usuario
-    class Endereco
-    enum TipoUsuario
+package "Application (Use Cases)" <<Hexagon>> #LightBlue {
+  package "Domain (Core)" <<Hexagon>> #LightYellow {
+    package "model" {
+      class Usuario
+      class Endereco
+      enum TipoUsuario
+    }
   }
-}
 
-package "Application (Use Cases)" #LightBlue {
   package "ports" {
     package "in (Driving Ports)" {
-      interface CadastrarUsuario
-      ' ... outros casos de uso
+      record CadastrarUsuarioInput
+      record UsuarioOutput
+      interface CadastrarUsuario {
+        + executar(input: CadastrarUsuarioInput) : UsuarioOutput
+      }
     }
     package "out (Driven Ports)" {
-      interface UsuarioRepository
-      interface SenhaEncoder
+      interface UsuarioRepository {
+        + salvar(usuario: Usuario) : Usuario
+      }
+      interface SenhaEncoder {
+        + encode(rawPassword: CharSequence) : String
+      }
     }
   }
   package "usecase" {
-    class CadastrarUsuarioUseCase {
-      + executar()
-    }
+    class CadastrarUsuarioUseCase
   }
 }
 
 package "Infrastructure (Adapters)" <<Cloud>> #LightGrey {
   package "rest (Driving Adapter)" {
-    class UsuarioController
+    class UsuarioController {
+    + criar(request: UsuarioRequestDTO) : UsuarioResponseDTO
+    }
     package "dto" {
-      class UsuarioRequestDTO
-      class UsuarioResponseDTO
+      record EnderecoDto
+      record UsuarioRequestDTO
+      record UsuarioResponseDTO
     }
   }
-  package "db (Driven Adapter)" {
+  package "persistence (Driven Adapter)" {
     class UsuarioRepositoryAdapter
-    package "jpa" {
-        interface UsuarioJPARepository
-    }
+    class UsuarioEntity
+    interface UsuarioJPARepository
   }
-
   package "seguranca" {
-      class BCryptSenhaEncoder
+    class BCryptSenhaEncoder
   }
 }
 
-
-
 ' --- Relacionamentos e Dependências ---
 
-' Infrastructure depende da camada de Application
+' --- Camada de Infraestrutura ---
+' Adapter de API (Driving)
 UsuarioController ..> CadastrarUsuario : chama
+UsuarioRequestDTO --> EnderecoDto : utiliza
+
+' Adapter de Persistência (Driven)
 UsuarioRepositoryAdapter ..|> UsuarioRepository : implementa
 UsuarioRepositoryAdapter --> UsuarioJPARepository : utiliza
+UsuarioJPARepository ..> UsuarioEntity : opera sobre
 
-' Application depende da camada de Domain
+' Adapter de Segurança (Driven)
+BCryptSenhaEncoder ..|> SenhaEncoder : implementa
+
+' --- Camada de Aplicação ---
 CadastrarUsuarioUseCase ..|> CadastrarUsuario : implementa
 CadastrarUsuarioUseCase --> UsuarioRepository : utiliza
 CadastrarUsuarioUseCase --> SenhaEncoder : utiliza
 CadastrarUsuarioUseCase --> Usuario : manipula
 
-' Infraestrutura depende do domain (interfaces)
-BCryptSenhaEncoder ..|> SenhaEncoder : implementa
-
-' Domain depende de domain
+' --- Camada de Domínio ---
 Usuario --> TipoUsuario : usa
 Usuario --> Endereco : usa
 
-' Setas de dependência explícitas entre as camadas principais
+' --- Dependências entre Camadas ---
 Infrastructure -right-> Application : depende de
 Application -right-> Domain : depende de
 

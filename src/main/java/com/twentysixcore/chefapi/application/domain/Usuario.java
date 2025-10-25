@@ -43,6 +43,9 @@ public class Usuario {
 
     public TipoUsuario getTipo() { return tipo; }
     public void setTipo(TipoUsuario tipo) { this.tipo = tipo; }
+    public void setTipo(String tipo) {
+        this.setTipo(TipoUsuario.valueOf(tipo));
+    }
 
     public Endereco getEndereco() { return endereco; }
     public void setEndereco(Endereco endereco) { this.endereco = endereco; }
@@ -56,9 +59,7 @@ public class Usuario {
         this.dataUltimaAlteracao = OffsetDateTime.now();
     }
 
-    public void atualizarDados(String nome, Endereco endereco) {
-        if (nome != null && !nome.isBlank()) this.nome = nome;
-        this.endereco = endereco;
+    public void atualizarDataAlteracao() {
         this.dataUltimaAlteracao = OffsetDateTime.now();
     }
 }

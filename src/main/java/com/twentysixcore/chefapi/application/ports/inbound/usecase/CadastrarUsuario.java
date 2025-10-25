@@ -4,5 +4,5 @@ import com.twentysixcore.chefapi.application.ports.inbound.dto.CadastrarUsuarioI
 import com.twentysixcore.chefapi.application.ports.inbound.dto.UsuarioOutput;
 
 public interface CadastrarUsuario {
-    UsuarioOutput executar(CadastrarUsuarioInput dto);
+    UsuarioOutput executar(CadastrarUsuarioInput input);
 }
