@@ -1,17 +1,15 @@
 package com.twentysixcore.chefapi.infrastructure.api.rest.controller;
 
 import com.twentysixcore.chefapi.application.ports.inbound.AlterarSenha;
-import com.twentysixcore.chefapi.application.ports.inbound.dto.AlterarSenhaInput;
 import com.twentysixcore.chefapi.application.ports.inbound.dto.UsuarioOutput;
-import com.twentysixcore.chefapi.application.ports.inbound.usecase.AtualizarUsuario;
-import com.twentysixcore.chefapi.application.ports.inbound.usecase.BuscarUsuarioPorId;
-import com.twentysixcore.chefapi.application.ports.inbound.usecase.DeletarUsuarioPorId;
+import com.twentysixcore.chefapi.application.ports.inbound.usecase.*;
+import com.twentysixcore.chefapi.application.usecase.AlterarSenhaUseCase;
 import com.twentysixcore.chefapi.application.usecase.BuscarUsuarioPorIdUseCase;
+import com.twentysixcore.chefapi.application.usecase.BuscarUsuarioPorNomeUseCase;
 import com.twentysixcore.chefapi.infrastructure.api.rest.dto.AlterarSenhaRequestDTO;
 import com.twentysixcore.chefapi.infrastructure.api.rest.dto.AtualizarUsuarioRequestDTO;
 import com.twentysixcore.chefapi.infrastructure.api.rest.dto.UsuarioRequestDTO;
 import com.twentysixcore.chefapi.infrastructure.api.rest.dto.UsuarioResponseDTO;
-import com.twentysixcore.chefapi.application.ports.inbound.usecase.CadastrarUsuario;
 import com.twentysixcore.chefapi.application.usecase.CadastrarUsuarioUseCase;
 import com.twentysixcore.chefapi.infrastructure.api.rest.mapper.UsuarioApiMapper;
 import jakarta.validation.Valid;
@@ -28,20 +26,23 @@ public class UsuarioController {
     private final CadastrarUsuario cadastrar;
     private final AtualizarUsuario atualizar;
     private final BuscarUsuarioPorId buscar;
+    private final BuscarUsuarioPorNome buscarPorNome;
     private final DeletarUsuarioPorId deletar;
     private final AlterarSenha alterarSenha;
     private final UsuarioApiMapper mapper;
 
-    public UsuarioController(CadastrarUsuarioUseCase cadastrar, BuscarUsuarioPorIdUseCase buscar, DeletarUsuarioPorId deletar, AlterarSenha alterarSenha, UsuarioApiMapper mapper) {
     public UsuarioController(
             CadastrarUsuarioUseCase cadastrar,
             AtualizarUsuario atualizar,
             BuscarUsuarioPorIdUseCase buscar,
+            BuscarUsuarioPorNomeUseCase buscarPorNome,
             DeletarUsuarioPorId deletar,
+            AlterarSenhaUseCase alterarSenha,
             UsuarioApiMapper mapper) {
         this.cadastrar = cadastrar;
         this.atualizar = atualizar;
         this.buscar = buscar;
+        this.buscarPorNome = buscarPorNome;
         this.deletar = deletar;
         this.alterarSenha = alterarSenha;
         this.mapper = mapper;
@@ -62,6 +63,12 @@ public class UsuarioController {
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioResponseDTO> buscarPorId(@PathVariable("id") UUID id) {
         UsuarioOutput usuario = buscar.executar(id);
+        return ResponseEntity.status(HttpStatus.OK).body(mapper.toResponse(usuario));
+    }
+
+    @GetMapping()
+    public ResponseEntity<UsuarioResponseDTO> buscarPorNome(@RequestParam("nome") String nome) {
+        UsuarioOutput usuario = buscarPorNome.executar(nome);
         return ResponseEntity.status(HttpStatus.OK).body(mapper.toResponse(usuario));
     }
 
