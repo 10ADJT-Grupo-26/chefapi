@@ -8,11 +8,4 @@ public record CadastrarUsuarioInput(
         String tipo,
         EnderecoInput endereco
 ) {
-    public record EnderecoInput(
-            String rua,
-            String numero,
-            String cidade,
-            String cep,
-            String uf
-    ) {}
 }
