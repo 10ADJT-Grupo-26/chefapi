@@ -2,15 +2,22 @@ package com.twentysixcore.chefapi.infrastructure.api.rest.controller;
 
 import com.twentysixcore.chefapi.application.ports.inbound.AlterarSenha;
 import com.twentysixcore.chefapi.application.ports.inbound.dto.UsuarioOutput;
-import com.twentysixcore.chefapi.application.ports.inbound.usecase.*;
+import com.twentysixcore.chefapi.application.ports.inbound.usecase.AtualizarUsuario;
+import com.twentysixcore.chefapi.application.ports.inbound.usecase.BuscarUsuarioPorId;
+import com.twentysixcore.chefapi.application.ports.inbound.usecase.BuscarUsuarioPorNome;
+import com.twentysixcore.chefapi.application.ports.inbound.usecase.CadastrarUsuario;
+import com.twentysixcore.chefapi.application.ports.inbound.usecase.DeletarUsuarioPorId;
+
 import com.twentysixcore.chefapi.application.usecase.AlterarSenhaUseCase;
 import com.twentysixcore.chefapi.application.usecase.BuscarUsuarioPorIdUseCase;
 import com.twentysixcore.chefapi.application.usecase.BuscarUsuarioPorNomeUseCase;
+import com.twentysixcore.chefapi.application.usecase.CadastrarUsuarioUseCase;
+
 import com.twentysixcore.chefapi.infrastructure.api.rest.dto.AlterarSenhaRequestDTO;
 import com.twentysixcore.chefapi.infrastructure.api.rest.dto.AtualizarUsuarioRequestDTO;
 import com.twentysixcore.chefapi.infrastructure.api.rest.dto.UsuarioRequestDTO;
 import com.twentysixcore.chefapi.infrastructure.api.rest.dto.UsuarioResponseDTO;
-import com.twentysixcore.chefapi.application.usecase.CadastrarUsuarioUseCase;
+
 import com.twentysixcore.chefapi.infrastructure.api.rest.mapper.UsuarioApiMapper;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
