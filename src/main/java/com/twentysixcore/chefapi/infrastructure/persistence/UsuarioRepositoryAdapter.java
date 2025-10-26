@@ -36,6 +36,11 @@ public class UsuarioRepositoryAdapter implements UsuarioRepository {
         return repo.findById(id).map(mapper::toDomain);
     }
 
+    public Optional<Usuario> buscarPorNome(String nome) {
+        return repo.findByNome(nome).map(mapper::toDomain);
+    }
+
+
     @Override
     public boolean existePorId(UUID id) {
         return repo.existsById(id);
@@ -45,4 +50,7 @@ public class UsuarioRepositoryAdapter implements UsuarioRepository {
     public void deletarPorId(UUID id) {
         repo.deleteById(id);
     }
+
+    @Override
+    public void deleteAll() {repo.deleteAll();}
 }

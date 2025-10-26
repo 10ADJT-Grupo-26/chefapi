@@ -8,7 +8,10 @@ import java.util.UUID;
 public interface UsuarioRepository {
     Usuario salvar(Usuario usuario);
     Optional<Usuario> buscarPorEmail(String email);
+    Optional<Usuario> buscarPorNome(String nome);
     Optional<Usuario> buscarPorId(UUID id);
     boolean existePorId(UUID id);
     void deletarPorId(UUID id);
+
+    void deleteAll();
 }
