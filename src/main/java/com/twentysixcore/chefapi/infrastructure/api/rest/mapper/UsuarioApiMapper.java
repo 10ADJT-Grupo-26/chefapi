@@ -1,29 +1,23 @@
 package com.twentysixcore.chefapi.infrastructure.api.rest.mapper;
 
 import com.twentysixcore.chefapi.application.ports.inbound.dto.AlterarSenhaInput;
-import com.twentysixcore.chefapi.application.ports.inbound.dto.CadastrarUsuarioInput;
-import com.twentysixcore.chefapi.application.ports.inbound.dto.UsuarioOutput;
-import com.twentysixcore.chefapi.infrastructure.api.rest.dto.AlterarSenhaRequestDTO;
 import com.twentysixcore.chefapi.application.ports.inbound.dto.AtualizarUsuarioInput;
 import com.twentysixcore.chefapi.application.ports.inbound.dto.CadastrarUsuarioInput;
 import com.twentysixcore.chefapi.application.ports.inbound.dto.UsuarioOutput;
-import com.twentysixcore.chefapi.infrastructure.api.rest.dto.AtualizarUsuarioRequestDTO;
-import com.twentysixcore.chefapi.infrastructure.api.rest.dto.UsuarioRequestDTO;
-import com.twentysixcore.chefapi.infrastructure.api.rest.dto.UsuarioResponseDTO;
-
+import com.twentysixcore.chefapi.infrastructure.api.rest.generated.model.AlterarSenhaRequestDTO;
+import com.twentysixcore.chefapi.infrastructure.api.rest.generated.model.AtualizarUsuarioRequestDTO;
+import com.twentysixcore.chefapi.infrastructure.api.rest.generated.model.UsuarioRequestDTO;
+import com.twentysixcore.chefapi.infrastructure.api.rest.generated.model.UsuarioResponseDTO;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface UsuarioApiMapper {
-    CadastrarUsuarioInput toInput(UsuarioRequestDTO request);
-
-    AtualizarUsuarioInput toInput(AtualizarUsuarioRequestDTO request);
-
-    UsuarioResponseDTO toResponse(UsuarioOutput output);
 
     AlterarSenhaInput toInput(AlterarSenhaRequestDTO request);
 
-    CadastrarUsuarioInput toInputFromGenerated(com.twentysixcore.chefapi.infrastructure.api.rest.generated.model.UsuarioRequestDTO generatedRequest);
+    AtualizarUsuarioInput toInput(AtualizarUsuarioRequestDTO request);
 
-    com.twentysixcore.chefapi.infrastructure.api.rest.generated.model.UsuarioResponseDTO toGeneratedResponse(UsuarioOutput usuario);
+    CadastrarUsuarioInput toInput(UsuarioRequestDTO generatedRequest);
+
+    UsuarioResponseDTO toResponse(UsuarioOutput usuario);
 }

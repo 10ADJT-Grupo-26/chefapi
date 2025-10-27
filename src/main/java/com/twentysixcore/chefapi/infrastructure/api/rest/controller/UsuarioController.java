@@ -4,13 +4,12 @@ import com.twentysixcore.chefapi.application.ports.inbound.AlterarSenha;
 import com.twentysixcore.chefapi.application.ports.inbound.dto.UsuarioOutput;
 import com.twentysixcore.chefapi.application.ports.inbound.usecase.*;
 import com.twentysixcore.chefapi.application.usecase.BuscarUsuarioPorNomeUseCase;
-import com.twentysixcore.chefapi.infrastructure.api.rest.dto.AlterarSenhaRequestDTO;
-import com.twentysixcore.chefapi.infrastructure.api.rest.dto.AtualizarUsuarioRequestDTO;
-import com.twentysixcore.chefapi.infrastructure.api.rest.dto.UsuarioRequestDTO;
-import com.twentysixcore.chefapi.infrastructure.api.rest.dto.UsuarioResponseDTO;
 import com.twentysixcore.chefapi.infrastructure.api.rest.generated.ApiApi;
+import com.twentysixcore.chefapi.infrastructure.api.rest.generated.model.AlterarSenhaRequestDTO;
+import com.twentysixcore.chefapi.infrastructure.api.rest.generated.model.AtualizarUsuarioRequestDTO;
+import com.twentysixcore.chefapi.infrastructure.api.rest.generated.model.UsuarioRequestDTO;
+import com.twentysixcore.chefapi.infrastructure.api.rest.generated.model.UsuarioResponseDTO;
 import com.twentysixcore.chefapi.infrastructure.api.rest.mapper.UsuarioApiMapper;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,13 +46,13 @@ public class UsuarioController implements ApiApi {
 
     @Override
     public ResponseEntity<UsuarioResponseDTO> criarUsuario(UsuarioRequestDTO request) {
-        var usuario = cadastrar.executar(mapper.toInputFromGenerated(request));
-        var response = mapper.toGeneratedResponse(usuario);
+        var usuario = cadastrar.executar(mapper.toInput(request));
+        var response = mapper.toResponse(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UsuarioResponseDTO> atualizar(@PathVariable("id") UUID id, @Valid @RequestBody AtualizarUsuarioRequestDTO request) {
+    @Override
+    public ResponseEntity<UsuarioResponseDTO> atualizar(UUID id, AtualizarUsuarioRequestDTO request) {
         UsuarioOutput usuario = atualizar.executar(id, mapper.toInput(request));
         return ResponseEntity.status(HttpStatus.OK).body(mapper.toResponse(usuario));
     }
@@ -61,12 +60,12 @@ public class UsuarioController implements ApiApi {
     @Override
     public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorId(UUID id) {
         var usuario = buscar.executar(id);
-        var response = mapper.toGeneratedResponse(usuario); // converte para generated.model
+        var response = mapper.toResponse(usuario);
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping()
-    public ResponseEntity<UsuarioResponseDTO> buscarPorNome(@RequestParam("nome") String nome) {
+    @Override
+    public ResponseEntity<UsuarioResponseDTO> buscarPorNome(String nome) {
         UsuarioOutput usuario = buscarPorNome.executar(nome);
         return ResponseEntity.status(HttpStatus.OK).body(mapper.toResponse(usuario));
     }

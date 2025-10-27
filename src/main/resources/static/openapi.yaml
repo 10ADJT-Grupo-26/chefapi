@@ -22,6 +22,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UsuarioResponseDTO'
+    get:
+      tags: [ Usuario ]
+      summary: Busca um usuário por nome
+      operationId: buscarPorNome
+      parameters:
+        - in: query
+          name: nome
+          description: Nome do usuário a ser buscado
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Usuário encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsuarioResponseDTO'
+        '404':
+          description: Usuário não encontrado com o nome fornecido.
 
   /api/v1/usuarios/{id}:
     get:
@@ -56,6 +76,34 @@ paths:
       responses:
         '204':
           description: Usuário deletado com sucesso
+    put:
+      tags: [ Usuario ]
+      summary: Atualizar um usuário
+      operationId: atualizar
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID único do usuário (UUID)
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        description: Dados do usuário para atualização.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AtualizarUsuarioRequestDTO'
+      responses:
+        '200':
+          description: Usuário atualizado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsuarioResponseDTO'
+        '404':
+          description: Usuário não encontrado.
 
   /api/v1/usuarios/alterar-senha:
     patch:
@@ -138,6 +186,23 @@ components:
         novaSenha:
           type: string
       required: [usuarioId, senhaAtual, novaSenha]
+
+    AtualizarUsuarioRequestDTO:
+      type: object
+      properties:
+        nome:
+          type: string
+        email:
+          type: string
+          format: email
+        login:
+          type: string
+        tipo:
+          type: string
+          description: Tipo de perfil do usuário
+          enum: [ CLIENTE, DONO_RESTAURANTE, ADMIN ]
+        endereco:
+          $ref: '#/components/schemas/EnderecoDTO'
 
 tags:
   - name: Usuario
