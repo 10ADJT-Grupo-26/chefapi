@@ -1,0 +1,139 @@
+{
+  "info": {
+    "name": "Chef API - Usuários v1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "c4ef5c2a-0000-0000-0000-1234567890ab"
+  },
+  "item": [
+    {
+      "name": "Criar usuário (válido)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": {
+          "raw": "http://localhost:8081/api/v1/usuarios",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "v1", "usuarios"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"João Tavares\",\n  \"email\": \"joao@example.com\",\n  \"login\": \"joaot\",\n  \"senha\": \"secret123\",\n  \"tipo\": \"DONO_RESTAURANTE\",\n  \"endereco\": {\n    \"rua\": \"Rua A\",\n    \"numero\": \"100\",\n    \"cidade\": \"Barbacena\",\n    \"cep\": \"36200-000\",\n    \"uf\": \"MG\"\n  }\n}"
+        }
+      }
+    },
+    {
+      "name": "Criar usuário (email duplicado)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": {
+          "raw": "http://localhost:8081/api/v1/usuarios",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "v1", "usuarios"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"Outro Usuário\",\n  \"email\": \"joao@example.com\",\n  \"login\": \"outro\",\n  \"senha\": \"secret123\",\n  \"tipo\": \"CLIENTE\",\n  \"endereco\": {\n    \"rua\": \"Rua B\",\n    \"numero\": \"50\",\n    \"cidade\": \"Barbacena\",\n    \"cep\": \"36200-000\",\n    \"uf\": \"MG\"\n  }\n}"
+        }
+      }
+    },
+    {
+      "name": "Buscar por ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8081/api/v1/usuarios/3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "v1", "usuarios", "3fa85f64-5717-4562-b3fc-2c963f66afa6"]
+        }
+      }
+    },
+    {
+      "name": "Buscar por nome",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8081/api/v1/usuarios?nome=João",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "v1", "usuarios"],
+          "query": [{ "key": "nome", "value": "João" }]
+        }
+      }
+    },
+    {
+      "name": "Atualizar usuário",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": {
+          "raw": "http://localhost:8081/api/v1/usuarios/3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "v1", "usuarios", "3fa85f64-5717-4562-b3fc-2c963f66afa6"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"João T. Atualizado\",\n  \"email\": \"joao@example.com\",\n  \"login\": \"joaot\",\n  \"tipo\": \"DONO_RESTAURANTE\",\n  \"endereco\": {\n    \"rua\": \"Rua B\",\n    \"numero\": \"200\",\n    \"cidade\": \"Barbacena\",\n    \"cep\": \"36200-000\",\n    \"uf\": \"MG\"\n  }\n}"
+        }
+      }
+    },
+    {
+      "name": "Alterar senha (sucesso)",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": {
+          "raw": "http://localhost:8081/api/v1/usuarios/alterar-senha",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "v1", "usuarios", "alterar-senha"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"usuarioId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"senhaAtual\": \"secret123\",\n  \"novaSenha\": \"novaSenha456\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Alterar senha (senha atual incorreta)",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": {
+          "raw": "http://localhost:8081/api/v1/usuarios/alterar-senha",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "v1", "usuarios", "alterar-senha"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"usuarioId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"senhaAtual\": \"errada123\",\n  \"novaSenha\": \"novaSenha456\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Deletar usuário",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "http://localhost:8081/api/v1/usuarios/3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "v1", "usuarios", "3fa85f64-5717-4562-b3fc-2c963f66afa6"]
+        }
+      }
+    }
+  ]
+}
