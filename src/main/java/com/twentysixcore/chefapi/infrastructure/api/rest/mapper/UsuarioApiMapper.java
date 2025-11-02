@@ -9,12 +9,15 @@ import com.twentysixcore.chefapi.infrastructure.api.rest.generated.model.Atualiz
 import com.twentysixcore.chefapi.infrastructure.api.rest.generated.model.UsuarioRequestDTO;
 import com.twentysixcore.chefapi.infrastructure.api.rest.generated.model.UsuarioResponseDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+import java.util.UUID;
 
 @Mapper(componentModel = "spring")
 public interface UsuarioApiMapper {
 
-    AlterarSenhaInput toInput(AlterarSenhaRequestDTO request);
-
+    @Mapping(target = "usuarioId", source = "id")
+    AlterarSenhaInput toInput(UUID id, AlterarSenhaRequestDTO request);
     AtualizarUsuarioInput toInput(AtualizarUsuarioRequestDTO request);
 
     CadastrarUsuarioInput toInput(UsuarioRequestDTO generatedRequest);
