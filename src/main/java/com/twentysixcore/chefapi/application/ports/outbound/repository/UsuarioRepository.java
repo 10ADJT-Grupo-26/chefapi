@@ -14,4 +14,6 @@ public interface UsuarioRepository {
     void deletarPorId(UUID id);
 
     void deleteAll();
+
+    Optional<Usuario> buscarPorLogin(String login);
 }
