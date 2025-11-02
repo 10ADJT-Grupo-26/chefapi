@@ -76,8 +76,9 @@ public class UsuarioController implements ApiApi {
     }
 
     @Override
-    public ResponseEntity<Void> alterarSenha(AlterarSenhaRequestDTO request) {
-        alterarSenha.executar(mapper.toInput(request));
+    public ResponseEntity<Void> alterarSenha(@PathVariable("id") UUID id,
+                                             @RequestBody AlterarSenhaRequestDTO request) {
+        alterarSenha.executar(mapper.toInput(id, request));
         return ResponseEntity.noContent().build();
     }
 }
