@@ -21,8 +21,8 @@ public class UsuarioEntity {
     @Column(nullable = false)
     private String login;
 
-    @Column(name = "password_hash", nullable = false)
-    private String passwordHash;
+    @Column(name = "senha", nullable = false)
+    private String senha;
 
     @Column(nullable = false, length = 32)
     private String tipo;
@@ -50,8 +50,8 @@ public class UsuarioEntity {
     public String getLogin() { return login; }
     public void setLogin(String login) { this.login = login; }
 
-    public String getPasswordHash() { return passwordHash; }
-    public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
+    public String getSenha() { return senha; }
+    public void setSenha(String passwordHash) { this.senha = passwordHash; }
 
     public String getTipo() { return tipo; }
     public void setTipo(String tipo) { this.tipo = tipo; }

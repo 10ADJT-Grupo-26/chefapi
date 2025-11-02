@@ -25,7 +25,7 @@ public class AlterarSenhaUseCase implements AlterarSenha {
         Usuario usuario = repository.buscarPorId(input.usuarioId())
                 .orElseThrow(() -> new NoSuchElementException("Usuário não encontrado"));
 
-        if (!senhaEncoder.verifica(input.senhaAtual(), usuario.getPasswordHash())) {
+        if (!senhaEncoder.verifica(input.senhaAtual(), usuario.getSenha())) {
             throw new IllegalArgumentException("Senha atual incorreta");
         }
 

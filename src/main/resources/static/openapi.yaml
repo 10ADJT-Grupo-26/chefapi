@@ -276,6 +276,9 @@ components:
         tipo:
           type: string
           enum: [CLIENTE, DONO_RESTAURANTE, ADMIN]
+        token:
+          type: string
+          description: Token JWT gerado para autenticação
       required: [id, nome, email, tipo]
 
 tags:
