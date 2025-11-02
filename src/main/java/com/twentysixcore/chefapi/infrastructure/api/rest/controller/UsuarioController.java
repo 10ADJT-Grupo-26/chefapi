@@ -1,13 +1,11 @@
 package com.twentysixcore.chefapi.infrastructure.api.rest.controller;
 
 import com.twentysixcore.chefapi.application.ports.inbound.AlterarSenha;
+import com.twentysixcore.chefapi.application.ports.inbound.ValidarLogin;
 import com.twentysixcore.chefapi.application.ports.inbound.dto.UsuarioOutput;
 import com.twentysixcore.chefapi.application.ports.inbound.usecase.*;
 import com.twentysixcore.chefapi.infrastructure.api.rest.generated.ApiApi;
-import com.twentysixcore.chefapi.infrastructure.api.rest.generated.model.AlterarSenhaRequestDTO;
-import com.twentysixcore.chefapi.infrastructure.api.rest.generated.model.AtualizarUsuarioRequestDTO;
-import com.twentysixcore.chefapi.infrastructure.api.rest.generated.model.UsuarioRequestDTO;
-import com.twentysixcore.chefapi.infrastructure.api.rest.generated.model.UsuarioResponseDTO;
+import com.twentysixcore.chefapi.infrastructure.api.rest.generated.model.*;
 import com.twentysixcore.chefapi.infrastructure.api.rest.mapper.UsuarioApiMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +22,7 @@ public class UsuarioController implements ApiApi {
     private final BuscarUsuarioPorNome buscarPorNome;
     private final DeletarUsuarioPorId deletar;
     private final AlterarSenha alterarSenha;
+    private final ValidarLogin validarLogin;
     private final UsuarioApiMapper mapper;
 
     public UsuarioController(
@@ -32,7 +31,7 @@ public class UsuarioController implements ApiApi {
             BuscarUsuarioPorId buscar,
             BuscarUsuarioPorNome buscarPorNome,
             DeletarUsuarioPorId deletar,
-            AlterarSenha alterarSenha,
+            AlterarSenha alterarSenha, ValidarLogin validarLogin,
             UsuarioApiMapper mapper) {
         this.cadastrar = cadastrar;
         this.atualizar = atualizar;
@@ -40,6 +39,7 @@ public class UsuarioController implements ApiApi {
         this.buscarPorNome = buscarPorNome;
         this.deletar = deletar;
         this.alterarSenha = alterarSenha;
+        this.validarLogin = validarLogin;
         this.mapper = mapper;
     }
 
@@ -73,6 +73,17 @@ public class UsuarioController implements ApiApi {
     public ResponseEntity<Void> deletarUsuarioPorId(UUID id) {
         deletar.executar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    public ResponseEntity<LoginResponseDTO> login(LoginRequestDTO request) {
+        try {
+            var usuario = validarLogin.executar(mapper.toInput(request));
+            var response = mapper.toLoginResponse(usuario);
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException | java.util.NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 
     @Override

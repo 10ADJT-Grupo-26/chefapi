@@ -136,6 +136,27 @@ paths:
         '404':
           description: Usuário não encontrado
 
+  /api/v1/auth/login:
+    post:
+      tags: [Auth]
+      summary: Valida o login do usuário
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequestDTO'
+      responses:
+        '200':
+          description: Login válido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponseDTO'
+        '401':
+          description: Credenciais inválidas
+
 components:
   schemas:
     UsuarioRequestDTO:
@@ -146,13 +167,13 @@ components:
           example: João Tavares
         email:
           type: string
-          example: joao.tavares@example.com
+          example: joao@example.com
         login:
           type: string
-          example: joaotavares
+          example: joaot
         senha:
           type: string
-          example: 123456
+          example: secret123
         tipo:
           type: string
           description: Tipo de usuário
@@ -207,10 +228,10 @@ components:
       properties:
         senhaAtual:
           type: string
-          example: 123456
+          example: secret123
         novaSenha:
           type: string
-          example: novaSenha123
+          example: novaSenha456
       required: [senhaAtual, novaSenha]
 
     AtualizarUsuarioRequestDTO:
@@ -229,7 +250,36 @@ components:
           enum: [CLIENTE, DONO_RESTAURANTE, ADMIN]
         endereco:
           $ref: '#/components/schemas/EnderecoDTO'
+      required: [nome, email, login, tipo, endereco]
+
+    LoginRequestDTO:
+      type: object
+      properties:
+        login:
+          type: string
+          example: joaot
+        senha:
+          type: string
+          example: secret123
+      required: [login, senha]
+
+    LoginResponseDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        nome:
+          type: string
+        email:
+          type: string
+        tipo:
+          type: string
+          enum: [CLIENTE, DONO_RESTAURANTE, ADMIN]
+      required: [id, nome, email, tipo]
 
 tags:
   - name: Usuario
-    description: Operações relacionadas aos usuários
+    description: Operações relacionadas a gerência de usuários
+  - name: Auth
+    description: Operações de autenticação de usuários
