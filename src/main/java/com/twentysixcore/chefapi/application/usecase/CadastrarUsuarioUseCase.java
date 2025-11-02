@@ -52,7 +52,16 @@ public class CadastrarUsuarioUseCase implements CadastrarUsuario {
                 input.endereco().uf()
         );
 
+        Endereco endereco = new Endereco(
+                input.endereco().rua(),
+                input.endereco().numero(),
+                input.endereco().cidade(),
+                input.endereco().cep(),
+                input.endereco().uf()
+        );
+
         TipoUsuario tipoUsuario = TipoUsuario.valueOf(input.tipo().toUpperCase());
+
         Usuario usuario = usuarioRepository.salvar(
                 new Usuario(
                         input.nome(),
@@ -79,8 +88,21 @@ public class CadastrarUsuarioUseCase implements CadastrarUsuario {
     }
 
     private void validaEmailExistente(String email) {
-        if (usuarioRepository.buscarPorEmail(email).isPresent())
+        if (usuarioRepository.buscarPorEmail(email).isPresent()) {
             throw new IllegalArgumentException("E-mail já cadastrado: " + email);
+        }
+    }
+
+    private void validaLogin(String login) {
+        Optional.ofNullable(login).ifPresentOrElse(this::validaLoginExistente, () -> {
+            throw new IllegalArgumentException("Login é obrigatório");
+        });
+    }
+
+    private void validaLoginExistente(String login) {
+        if (usuarioRepository.buscarPorLogin(login).isPresent()) {
+            throw new IllegalArgumentException("Login já cadastrado: " + login);
+        }
     }
 
     private void validaLogin(String login) {
@@ -89,8 +111,9 @@ public class CadastrarUsuarioUseCase implements CadastrarUsuario {
     }
 
     private static void validaSenha(String senha) {
-        if (senha == null || senha.length() < 6)
+        if (senha == null || senha.length() < 6) {
             throw new IllegalArgumentException("Senha inválida: mínimo 6 caracteres");
+        }
     }
 
     private void validarPermissoesParaCriacao(String tipoRequisitado) {

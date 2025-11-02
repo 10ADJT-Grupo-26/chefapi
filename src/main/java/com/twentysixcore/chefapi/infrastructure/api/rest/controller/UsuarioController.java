@@ -4,13 +4,12 @@ import com.twentysixcore.chefapi.application.ports.inbound.AlterarSenha;
 import com.twentysixcore.chefapi.application.ports.inbound.ValidarLogin;
 import com.twentysixcore.chefapi.application.ports.inbound.dto.UsuarioOutput;
 import com.twentysixcore.chefapi.application.ports.inbound.usecase.*;
-import com.twentysixcore.chefapi.application.usecase.BuscarUsuarioPorNomeUseCase;
 import com.twentysixcore.chefapi.infrastructure.api.rest.generated.ApiApi;
 import com.twentysixcore.chefapi.infrastructure.api.rest.generated.model.*;
 import com.twentysixcore.chefapi.infrastructure.api.rest.mapper.UsuarioApiMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
@@ -30,7 +29,7 @@ public class UsuarioController implements ApiApi {
             CadastrarUsuario cadastrar,
             AtualizarUsuario atualizar,
             BuscarUsuarioPorId buscar,
-            BuscarUsuarioPorNomeUseCase buscarPorNome,
+            BuscarUsuarioPorNome buscarPorNome,
             DeletarUsuarioPorId deletar,
             AlterarSenha alterarSenha, ValidarLogin validarLogin,
             UsuarioApiMapper mapper) {
