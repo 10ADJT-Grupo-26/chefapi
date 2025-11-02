@@ -136,6 +136,66 @@ mvn spring-boot:run
 ```
 
 ---
+# 🔐 Autenticação e Autorização
+
+O sistema utiliza **Spring Security 6** com autenticação baseada em **JWT (JSON Web Token)**, garantindo segurança e controle de acesso em todas as rotas da API.
+
+---
+
+## 🔑 Fluxo de autenticação
+
+1. O usuário realiza o login no endpoint:
+
+   ```
+   POST /api/v1/auth/login
+   ```
+
+   **Body:**
+   ```json
+   {
+     "login": "admin",
+     "senha": "admin123"
+   }
+   ```
+
+2. Se as credenciais forem válidas, o sistema gera e retorna um **token JWT**:
+
+   **Resposta:**
+   ```json
+   {
+     "id": "c9b4a350-3a14-4a7f-b68e-4a6a90473ed3",
+     "nome": "Administrador do Sistema",
+     "email": "admin@chefapi.com",
+     "tipo": "ADMIN",
+     "token": "eyJhbGciOiJIUzI1NiIsInR5..."
+   }
+   ```
+
+3. O token JWT deve ser enviado em todas as requisições protegidas no cabeçalho HTTP:
+
+   ```
+   Authorization: Bearer <token>
+   ```
+
+4. O **JwtAuthenticationFilter** valida o token e libera o acesso conforme o tipo de usuário (`CLIENTE`, `DONO_RESTAURANTE`, `ADMIN`).
+
+---
+
+## 👤 Usuário ADMIN automático
+
+Durante a inicialização, o **Flyway** executa a migração `V2__create_admin_user.sql`, que cria automaticamente o usuário administrador padrão no banco:
+
+| Campo | Valor |
+|--------|--------|
+| **Nome** | Administrador do Sistema |
+| **Email** | `admin@chefapi.com` |
+| **Login** | `admin` |
+| **Senha** | `admin123` *(armazenada com BCrypt)* |
+| **Tipo** | `ADMIN` |
+
+Esse usuário possui **todos os privilégios** e pode criar e gerenciar outros usuários, incluindo os tipos `DONO_RESTAURANTE` e `CLIENTE`.
+
+---
 
 ## 🧪 Testando via Postman
 
@@ -267,4 +327,4 @@ Acesse após iniciar a aplicação:
 ---
 
 ## 🧱 Licença
-Este projeto é de uso educacional, desenvolvido como parte de um estudo de **engenharia de software aplicada com DDD e Spring Boot**.
+Este projeto é de uso educacional, desenvolvido como parte de um estudo de **Tech Challenge 01 do curso de Pós-Graduação de Arquitetura de software com Java, na FIAP**.
