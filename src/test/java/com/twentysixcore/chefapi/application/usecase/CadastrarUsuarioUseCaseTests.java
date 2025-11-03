@@ -115,7 +115,7 @@ class CadastrarUsuarioUseCaseTests {
 
     @Test
     void deveLancarErroQuandoLoginEhNulo() {
-        var endereco = new CadastrarUsuarioInput.EnderecoInput("Rua A", "123", "Cidade X", "12345-000", "MG");
+        var endereco = new EnderecoInput("Rua A", "123", "Cidade X", "12345-000", "MG");
         var input = new CadastrarUsuarioInput("João", "joao@example.com", null, "123456", "CLIENTE", endereco);
 
         when(usuarioRepository.buscarPorEmail(anyString())).thenReturn(Optional.empty());
@@ -148,7 +148,7 @@ class CadastrarUsuarioUseCaseTests {
 
     @Test
     void deveNegarClienteAnonimoCriarContaDeAdmin() {
-        var endereco = new CadastrarUsuarioInput.EnderecoInput("Rua A", "123", "Cidade X", "12345-000", "MG");
+        var endereco = new EnderecoInput("Rua A", "123", "Cidade X", "12345-000", "MG");
         var input = new CadastrarUsuarioInput("João", "joao@example.com", "joao123", "123456", "ADMIN", endereco);
 
         when(autenticadoProvider.obterLoginAtual()).thenReturn(Optional.empty());
@@ -176,7 +176,7 @@ class CadastrarUsuarioUseCaseTests {
     @Test
     void deveNegarClienteCriandoAdmin() {
         var input = new CadastrarUsuarioInput("João", "joao@example.com", "joao123", "123456", "ADMIN",
-                new CadastrarUsuarioInput.EnderecoInput("Rua A", "123", "Cidade X", "12345-000", "MG"));
+                new EnderecoInput("Rua A", "123", "Cidade X", "12345-000", "MG"));
 
         var cliente = new Usuario("Maria", "maria@x.com", "maria", "hash", TipoUsuario.CLIENTE,
                 new Endereco("Rua", "1", "Cidade", "00000-000", "MG"));
