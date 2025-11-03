@@ -8,7 +8,7 @@ public class Usuario {
     private String nome;
     private String email;
     private String login;
-    private String passwordHash;
+    private String senha;
     private TipoUsuario tipo;
     private Endereco endereco;
     private OffsetDateTime dataUltimaAlteracao;
@@ -18,7 +18,7 @@ public class Usuario {
         this.nome = nome;
         this.email = email;
         this.login = login;
-        this.passwordHash = senha;
+        this.senha = senha;
         this.tipo = tipo;
         this.endereco = endereco;
         this.dataUltimaAlteracao = OffsetDateTime.now();
@@ -38,8 +38,8 @@ public class Usuario {
     public String getLogin() { return login; }
     public void setLogin(String login) { this.login = login; }
 
-    public String getPasswordHash() { return passwordHash; }
-    public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
+    public String getSenha() { return senha; }
+    public void setSenha(String senha) { this.senha = senha; }
 
     public TipoUsuario getTipo() { return tipo; }
     public void setTipo(TipoUsuario tipo) { this.tipo = tipo; }
@@ -55,7 +55,7 @@ public class Usuario {
 
     public void alterarSenha(String novaSenha) {
         if (novaSenha == null) throw new IllegalArgumentException("Nova senha não pode ser nula");
-        this.passwordHash = novaSenha;
+        this.senha = novaSenha;
         this.dataUltimaAlteracao = OffsetDateTime.now();
     }
 

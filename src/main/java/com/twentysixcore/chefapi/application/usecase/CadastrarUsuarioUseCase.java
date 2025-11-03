@@ -12,6 +12,8 @@ import com.twentysixcore.chefapi.application.ports.outbound.repository.UsuarioRe
 import com.twentysixcore.chefapi.application.ports.outbound.seguranca.SenhaEncoder;
 import com.twentysixcore.chefapi.infrastructure.event.DomainEventPublisher;
 import jakarta.transaction.Transactional;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -24,11 +26,10 @@ public class CadastrarUsuarioUseCase implements CadastrarUsuario {
     private final DomainEventPublisher eventPublisher;
     private final SenhaEncoder senhaEncoder;
 
-    public CadastrarUsuarioUseCase(
-            UsuarioRepository usuarioRepository,
-            DomainEventPublisher eventPublisher,
-            SenhaEncoder senhaEncoder,
-            UsuarioApplicationMapper mapper) {
+    public CadastrarUsuarioUseCase(UsuarioRepository usuarioRepository,
+                                   DomainEventPublisher eventPublisher,
+                                   SenhaEncoder senhaEncoder,
+                                   UsuarioApplicationMapper mapper) {
         this.usuarioRepository = usuarioRepository;
         this.eventPublisher = eventPublisher;
         this.senhaEncoder = senhaEncoder;
@@ -41,6 +42,7 @@ public class CadastrarUsuarioUseCase implements CadastrarUsuario {
         validaEmail(input.email());
         validaLogin(input.login());
         validaSenha(input.senha());
+        validarPermissoesParaCriacao(input.tipo());
 
         Endereco endereco = new Endereco(
                 input.endereco().rua(),
@@ -98,6 +100,38 @@ public class CadastrarUsuarioUseCase implements CadastrarUsuario {
     private static void validaSenha(String senha) {
         if (senha == null || senha.length() < 6) {
             throw new IllegalArgumentException("Senha inválida: mínimo 6 caracteres");
+        }
+    }
+
+    private void validarPermissoesParaCriacao(String tipoRequisitado) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth == null || auth.getPrincipal().equals("anonymousUser")) {
+            if (!tipoRequisitado.equalsIgnoreCase("CLIENTE")) {
+                throw new SecurityException("Apenas usuários do tipo CLIENTE podem se registrar sem autenticação.");
+            }
+            return;
+        }
+
+        String login = auth.getName();
+        Usuario usuarioLogado = usuarioRepository.buscarPorLogin(login)
+                .orElseThrow(() -> new SecurityException("Usuário autenticado não encontrado."));
+
+        TipoUsuario tipoLogado = usuarioLogado.getTipo();
+        TipoUsuario tipoSolicitado = TipoUsuario.valueOf(tipoRequisitado.toUpperCase());
+
+        switch (tipoLogado) {
+            case ADMIN:
+                break;
+            case DONO_RESTAURANTE:
+                break;
+            case CLIENTE:
+                if (!tipoSolicitado.equals(TipoUsuario.CLIENTE)) {
+                    throw new SecurityException("Usuários CLIENTE só podem criar novos usuários CLIENTE.");
+                }
+                break;
+            default:
+                throw new SecurityException("Tipo de usuário não autorizado.");
         }
     }
 }

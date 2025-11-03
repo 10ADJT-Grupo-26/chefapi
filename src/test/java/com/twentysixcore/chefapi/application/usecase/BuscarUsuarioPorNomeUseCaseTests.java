@@ -3,8 +3,6 @@ package com.twentysixcore.chefapi.application.usecase;
 import com.twentysixcore.chefapi.application.domain.Endereco;
 import com.twentysixcore.chefapi.application.domain.TipoUsuario;
 import com.twentysixcore.chefapi.application.domain.Usuario;
-import com.twentysixcore.chefapi.application.ports.inbound.dto.UsuarioOutput;
-import com.twentysixcore.chefapi.infrastructure.persistence.UsuarioEntity;
 import com.twentysixcore.chefapi.infrastructure.persistence.UsuarioRepositoryAdapter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 
 import java.time.OffsetDateTime;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -38,7 +35,7 @@ public class BuscarUsuarioPorNomeUseCaseTests {
         usuario1.setNome("Lucas Silva");
         usuario1.setEmail("lucas@email.com");
         usuario1.setLogin("lucas.silva");
-        usuario1.setPasswordHash("hash123");
+        usuario1.setSenha("hash123");
         usuario1.setTipo(TipoUsuario.CLIENTE.name());
 
         usuario1.setEndereco(new Endereco("Rua A", "123", "São Paulo", "01234-567", "SP"));
@@ -49,7 +46,7 @@ public class BuscarUsuarioPorNomeUseCaseTests {
         usuario2.setNome("Maria Santos");
         usuario2.setEmail("maria@email.com");
         usuario2.setLogin("maria.santos");
-        usuario2.setPasswordHash("hash456");
+        usuario2.setSenha("hash456");
         usuario2.setTipo(TipoUsuario.DONO_RESTAURANTE.name());
         usuario2.setEndereco(new Endereco("Rua B", "456", "Rio de Janeiro", "98765-432", "RJ"));
         usuario2.setDataUltimaAlteracao(OffsetDateTime.now());

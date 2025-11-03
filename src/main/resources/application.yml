@@ -9,6 +9,7 @@ spring:
     driver-class-name: org.postgresql.Driver
 
   jpa:
+    show-sql: true
     hibernate:
       ddl-auto: none
     properties:
@@ -16,6 +17,7 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
+
 
   flyway:
     enabled: true
@@ -33,6 +35,6 @@ logging:
 
 springdoc:
   api-docs:
-    path: /api/v1/docs
+    path: /v3/api-docs
   swagger-ui:
-    path: /api/v1/swagger
+    path: /swagger-ui.html
