@@ -22,7 +22,18 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/login", "/api/v1/swagger/**", "/api/v1/docs/**").permitAll()
+                        .requestMatchers(
+                                "/api/v1/auth/login",
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-resources/**",
+                                "/swagger-resources",
+                                "/webjars/**",
+                                "/configuration/ui",
+                                "/configuration/security",
+                                "/openapi.yaml"
+                        ).permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/usuarios").permitAll()
                         .anyRequest().authenticated()
                 )
