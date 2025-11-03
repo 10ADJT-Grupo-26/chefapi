@@ -52,14 +52,6 @@ public class CadastrarUsuarioUseCase implements CadastrarUsuario {
                 input.endereco().uf()
         );
 
-        Endereco endereco = new Endereco(
-                input.endereco().rua(),
-                input.endereco().numero(),
-                input.endereco().cidade(),
-                input.endereco().cep(),
-                input.endereco().uf()
-        );
-
         TipoUsuario tipoUsuario = TipoUsuario.valueOf(input.tipo().toUpperCase());
 
         Usuario usuario = usuarioRepository.salvar(
@@ -103,11 +95,6 @@ public class CadastrarUsuarioUseCase implements CadastrarUsuario {
         if (usuarioRepository.buscarPorLogin(login).isPresent()) {
             throw new IllegalArgumentException("Login já cadastrado: " + login);
         }
-    }
-
-    private void validaLogin(String login) {
-        if (usuarioRepository.buscarPorLogin(login).isPresent())
-            throw new IllegalArgumentException("Login já cadastrado: " + login);
     }
 
     private static void validaSenha(String senha) {
