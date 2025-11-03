@@ -10,4 +10,8 @@ public interface UsuarioApplicationMapper {
 
     @Mapping(target = "tipo", expression = "java(usuario.getTipo().name())")
     UsuarioOutput toOutput(Usuario usuario);
+
+    @Mapping(target = "tipo", expression = "java(usuario.getTipo().name())")
+    @Mapping(target = "token", source = "token")
+    UsuarioOutput toOutput(Usuario usuario, String token);
 }

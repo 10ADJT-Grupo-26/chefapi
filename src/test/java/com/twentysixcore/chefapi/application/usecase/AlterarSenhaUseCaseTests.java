@@ -43,7 +43,7 @@ class AlterarSenhaUseCaseTests {
 
         useCase.executar(input);
 
-        assertEquals("hashNovo", usuario.getPasswordHash());
+        assertEquals("hashNovo", usuario.getSenha());
         verify(repository).salvar(usuario);
     }
 

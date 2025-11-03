@@ -53,4 +53,10 @@ public class UsuarioRepositoryAdapter implements UsuarioRepository {
 
     @Override
     public void deleteAll() {repo.deleteAll();}
+
+
+    @Override
+    public Optional<Usuario> buscarPorLogin(String login) {
+        return repo.findByLogin(login).map(mapper::toDomain);
+    }
 }

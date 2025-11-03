@@ -15,7 +15,8 @@ public interface UsuarioPersistenceMapper {
             @Mapping(source = "endereco.numero", target = "numero"),
             @Mapping(source = "endereco.cidade", target = "cidade"),
             @Mapping(source = "endereco.cep", target = "cep"),
-            @Mapping(source = "endereco.uf", target = "uf")
+            @Mapping(source = "endereco.uf", target = "uf"),
+            @Mapping(source = "senha", target = "senha")
     })
     UsuarioEntity toEntity(Usuario usuario);
 
@@ -25,7 +26,8 @@ public interface UsuarioPersistenceMapper {
             @Mapping(source = "cidade", target = "endereco.cidade"),
             @Mapping(source = "cep", target = "endereco.cep"),
             @Mapping(source = "uf", target = "endereco.uf"),
-            @Mapping(target = "tipo", expression = "java(com.twentysixcore.chefapi.application.domain.TipoUsuario.valueOf(entity.getTipo()))")
+            @Mapping(target = "tipo", expression = "java(com.twentysixcore.chefapi.application.domain.TipoUsuario.valueOf(entity.getTipo()))"),
+            @Mapping(source = "senha", target = "senha")
     })
     Usuario toDomain(UsuarioEntity entity);
 }

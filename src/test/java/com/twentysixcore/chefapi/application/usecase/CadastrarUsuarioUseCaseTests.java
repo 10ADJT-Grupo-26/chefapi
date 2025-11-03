@@ -7,6 +7,7 @@ import com.twentysixcore.chefapi.application.event.UsuarioCriado;
 import com.twentysixcore.chefapi.application.exception.*;
 import com.twentysixcore.chefapi.application.mapper.UsuarioApplicationMapper;
 import com.twentysixcore.chefapi.application.ports.inbound.dto.CadastrarUsuarioInput;
+import com.twentysixcore.chefapi.application.ports.inbound.dto.EnderecoInput;
 import com.twentysixcore.chefapi.application.ports.inbound.dto.UsuarioOutput;
 import com.twentysixcore.chefapi.application.ports.inbound.security.UsuarioAutenticadoProvider;
 import com.twentysixcore.chefapi.application.ports.outbound.repository.UsuarioRepository;
@@ -48,7 +49,7 @@ class CadastrarUsuarioUseCaseTests {
     }
 
     private CadastrarUsuarioInput criarInputValido() {
-        var enderecoInput = new CadastrarUsuarioInput.EnderecoInput("Rua A", "123", "Cidade X", "12345-000", "MG");
+        var enderecoInput = new EnderecoInput("Rua A", "123", "Cidade X", "12345-000", "MG");
         return new CadastrarUsuarioInput("João", "joao@example.com", "joao123", "123456", "CLIENTE", enderecoInput);
     }
 
@@ -94,7 +95,7 @@ class CadastrarUsuarioUseCaseTests {
 
     @Test
     void deveLancarErroQuandoEmailEhNulo() {
-        var enderecoInput = new CadastrarUsuarioInput.EnderecoInput("Rua A", "123", "Cidade X", "12345-000", "MG");
+        var enderecoInput = new EnderecoInput("Rua A", "123", "Cidade X", "12345-000", "MG");
         var input = new CadastrarUsuarioInput("João", null, "joao123", "123456", "CLIENTE", enderecoInput);
 
         var ex = assertThrows(EmailObrigatorioException.class, () -> useCase.executar(input));
@@ -125,7 +126,7 @@ class CadastrarUsuarioUseCaseTests {
 
     @Test
     void deveLancarErroQuandoSenhaInvalida() {
-        var enderecoInput = new CadastrarUsuarioInput.EnderecoInput("Rua A", "123", "Cidade X", "12345-000", "MG");
+        var enderecoInput = new EnderecoInput("Rua A", "123", "Cidade X", "12345-000", "MG");
         var input = new CadastrarUsuarioInput("João", "joao@example.com", "joao123", "123", "CLIENTE", enderecoInput);
 
         var ex = assertThrows(SenhaInvalidaException.class, () -> useCase.executar(input));
