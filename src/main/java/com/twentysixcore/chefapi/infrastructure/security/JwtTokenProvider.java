@@ -1,5 +1,6 @@
 package com.twentysixcore.chefapi.infrastructure.security;
 
+import com.twentysixcore.chefapi.application.ports.outbound.seguranca.TokenProvider;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -10,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 @Component
-public class JwtTokenProvider {
+public class JwtTokenProvider implements TokenProvider {
 
     private static final String SECRET_KEY = "secret-key-12345678901234567890-abcdef";
     private static final long EXPIRATION = 86400000L;

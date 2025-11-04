@@ -1,8 +1,8 @@
 package com.twentysixcore.chefapi.application.usecase;
 
 import com.twentysixcore.chefapi.application.domain.Usuario;
-import com.twentysixcore.chefapi.application.ports.inbound.AlterarSenha;
 import com.twentysixcore.chefapi.application.ports.inbound.dto.AlterarSenhaInput;
+import com.twentysixcore.chefapi.application.ports.inbound.usecase.AlterarSenha;
 import com.twentysixcore.chefapi.application.ports.outbound.repository.UsuarioRepository;
 import com.twentysixcore.chefapi.application.ports.outbound.seguranca.SenhaEncoder;
 import org.springframework.stereotype.Service;

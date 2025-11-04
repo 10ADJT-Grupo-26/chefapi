@@ -1,6 +1,6 @@
 package com.twentysixcore.chefapi.infrastructure.security;
 
-import com.twentysixcore.chefapi.application.ports.inbound.security.UsuarioAutenticadoProvider;
+import com.twentysixcore.chefapi.application.ports.outbound.seguranca.UsuarioAutenticadoProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;

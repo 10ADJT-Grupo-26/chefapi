@@ -1,5 +1,6 @@
 package com.twentysixcore.chefapi.infrastructure.event;
 
+import com.twentysixcore.chefapi.application.ports.outbound.DomainEventPublisher;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
