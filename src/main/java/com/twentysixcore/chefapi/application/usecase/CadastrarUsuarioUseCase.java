@@ -8,11 +8,11 @@ import com.twentysixcore.chefapi.application.exception.*;
 import com.twentysixcore.chefapi.application.mapper.UsuarioApplicationMapper;
 import com.twentysixcore.chefapi.application.ports.inbound.dto.CadastrarUsuarioInput;
 import com.twentysixcore.chefapi.application.ports.inbound.dto.UsuarioOutput;
-import com.twentysixcore.chefapi.application.ports.inbound.security.UsuarioAutenticadoProvider;
 import com.twentysixcore.chefapi.application.ports.inbound.usecase.CadastrarUsuario;
+import com.twentysixcore.chefapi.application.ports.outbound.DomainEventPublisher;
 import com.twentysixcore.chefapi.application.ports.outbound.repository.UsuarioRepository;
 import com.twentysixcore.chefapi.application.ports.outbound.seguranca.SenhaEncoder;
-import com.twentysixcore.chefapi.infrastructure.event.DomainEventPublisher;
+import com.twentysixcore.chefapi.application.ports.outbound.seguranca.UsuarioAutenticadoProvider;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.twentysixcore.chefapi.application.ports.inbound.security;
+package com.twentysixcore.chefapi.application.ports.outbound.seguranca;
 
 import java.util.Optional;
 
