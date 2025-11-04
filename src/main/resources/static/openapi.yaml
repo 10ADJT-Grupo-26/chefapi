@@ -158,6 +158,11 @@ paths:
           description: Credenciais inválidas
 
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT # Opcional, mas bom para documentar que é JWT
   schemas:
     UsuarioRequestDTO:
       type: object
@@ -286,3 +291,6 @@ tags:
     description: Operações relacionadas a gerência de usuários
   - name: Auth
     description: Operações de autenticação de usuários
+
+security:
+  - bearerAuth: []
