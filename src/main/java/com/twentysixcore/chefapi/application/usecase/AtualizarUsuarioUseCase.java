@@ -2,6 +2,7 @@ package com.twentysixcore.chefapi.application.usecase;
 
 import com.twentysixcore.chefapi.application.domain.Endereco;
 import com.twentysixcore.chefapi.application.domain.Usuario;
+import com.twentysixcore.chefapi.application.exception.EmailJaCadastradoException;
 import com.twentysixcore.chefapi.application.mapper.UsuarioApplicationMapper;
 import com.twentysixcore.chefapi.application.ports.inbound.dto.AtualizarUsuarioInput;
 import com.twentysixcore.chefapi.application.ports.inbound.dto.EnderecoInput;
@@ -30,7 +31,10 @@ public class AtualizarUsuarioUseCase implements AtualizarUsuario {
                 .orElseThrow(() -> new NoSuchElementException("Nenhum usuário encontrado com o id: " + id));
 
         Optional.ofNullable(dto.nome()).ifPresent(usuario::setNome);
-        Optional.ofNullable(dto.email()).ifPresent(usuario::setEmail);
+        Optional.ofNullable(dto.email()).ifPresent(email -> {
+            validaEmailExistente(email, usuario);
+            usuario.setEmail(email);
+        });
         Optional.ofNullable(dto.login()).ifPresent(usuario::setLogin);
         Optional.ofNullable(dto.tipo()).ifPresent(usuario::setTipo);
         Optional.ofNullable(dto.endereco()).ifPresent(enderecoInput -> atualizaEndereco(enderecoInput, usuario.getEndereco()));
@@ -46,5 +50,10 @@ public class AtualizarUsuarioUseCase implements AtualizarUsuario {
         Optional.ofNullable(enderecoInput.cidade()).ifPresent(endereco::setCidade);
         Optional.ofNullable(enderecoInput.cep()).ifPresent(endereco::setCep);
         Optional.ofNullable(enderecoInput.uf()).ifPresent(endereco::setUf);
+    }
+
+    private void validaEmailExistente(String email, Usuario usuario) {
+        if (usuarioRepository.buscarPorEmail(email).isPresent() && !usuario.getEmail().equals(email))
+            throw new EmailJaCadastradoException(email);
     }
 }
