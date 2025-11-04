@@ -1,179 +1,538 @@
 {
   "info": {
-    "name": "Chef API - Usuários v1",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_postman_id": "c4ef5c2a-0000-0000-0000-1234567890ab"
+    "_postman_id": "d8abb903-947d-401e-96d4-6711d6e25476",
+    "name": "Chef API - Usuários v1 Copy 2",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+    "_exporter_id": "18075074"
   },
   "item": [
     {
-      "name": "Criar usuário (válido)",
-      "request": {
-        "method": "POST",
-        "header": [{ "key": "Content-Type", "value": "application/json" }],
-        "url": {
-          "raw": "http://localhost:8081/api/v1/usuarios",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8081",
-          "path": ["api", "v1", "usuarios"]
+      "name": "Chef API - Usuários v1",
+      "item": [
+        {
+          "name": "Criar usuário (válido)",
+          "protocolProfileBehavior": {
+            "followRedirects": true,
+            "disableUrlEncoding": false,
+            "disableCookies": false
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Lucas Souza\",\n  \"email\": \"lucas@example.com\",\n  \"login\": \"lsouza\",\n  \"senha\": \"secret123\",\n  \"tipo\": \"CLIENTE\",\n  \"endereco\": {\n    \"rua\": \"Rua A\",\n    \"numero\": \"100\",\n    \"cidade\": \"Barbacena\",\n    \"cep\": \"36200-000\",\n    \"uf\": \"MG\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": "http://localhost:8081/api/v1/usuarios"
+          },
+          "response": []
         },
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"nome\": \"João Tavares\",\n  \"email\": \"joao@example.com\",\n  \"login\": \"joaot\",\n  \"senha\": \"secret123\",\n  \"tipo\": \"DONO_RESTAURANTE\",\n  \"endereco\": {\n    \"rua\": \"Rua A\",\n    \"numero\": \"100\",\n    \"cidade\": \"Barbacena\",\n    \"cep\": \"36200-000\",\n    \"uf\": \"MG\"\n  }\n}"
-        }
-      }
-    },
-    {
-      "name": "Criar usuário (email duplicado)",
-      "request": {
-        "method": "POST",
-        "header": [{ "key": "Content-Type", "value": "application/json" }],
-        "url": {
-          "raw": "http://localhost:8081/api/v1/usuarios",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8081",
-          "path": ["api", "v1", "usuarios"]
+        {
+          "name": "Criar usuário (email duplicado)",
+          "protocolProfileBehavior": {
+            "followRedirects": true,
+            "disableUrlEncoding": false,
+            "disableCookies": false
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Outro Usuário\",\n  \"email\": \"joao@example.com\",\n  \"login\": \"outro\",\n  \"senha\": \"secret123\",\n  \"tipo\": \"CLIENTE\",\n  \"endereco\": {\n    \"rua\": \"Rua B\",\n    \"numero\": \"50\",\n    \"cidade\": \"Barbacena\",\n    \"cep\": \"36200-000\",\n    \"uf\": \"MG\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": "http://localhost:8081/api/v1/usuarios"
+          },
+          "response": []
         },
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"nome\": \"Outro Usuário\",\n  \"email\": \"joao@example.com\",\n  \"login\": \"outro\",\n  \"senha\": \"secret123\",\n  \"tipo\": \"CLIENTE\",\n  \"endereco\": {\n    \"rua\": \"Rua B\",\n    \"numero\": \"50\",\n    \"cidade\": \"Barbacena\",\n    \"cep\": \"36200-000\",\n    \"uf\": \"MG\"\n  }\n}"
-        }
-      }
-    },
-    {
-      "name": "Buscar por ID",
-      "request": {
-        "method": "GET",
-        "url": {
-          "raw": "http://localhost:8081/api/v1/usuarios/3fa85f64-5717-4562-b3fc-2c963f66afa6",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8081",
-          "path": ["api", "v1", "usuarios", "3fa85f64-5717-4562-b3fc-2c963f66afa6"]
-        }
-      }
-    },
-    {
-      "name": "Buscar por nome",
-      "request": {
-        "method": "GET",
-        "url": {
-          "raw": "http://localhost:8081/api/v1/usuarios?nome=João",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8081",
-          "path": ["api", "v1", "usuarios"],
-          "query": [{ "key": "nome", "value": "João" }]
-        }
-      }
-    },
-    {
-      "name": "Atualizar usuário",
-      "request": {
-        "method": "PUT",
-        "header": [{ "key": "Content-Type", "value": "application/json" }],
-        "url": {
-          "raw": "http://localhost:8081/api/v1/usuarios/3fa85f64-5717-4562-b3fc-2c963f66afa6",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8081",
-          "path": ["api", "v1", "usuarios", "3fa85f64-5717-4562-b3fc-2c963f66afa6"]
+        {
+          "name": "Buscar por ID",
+          "protocolProfileBehavior": {
+            "followRedirects": true,
+            "disableUrlEncoding": false,
+            "disableCookies": false
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2FvdCIsImlhdCI6MTc2MjIxMjE5NiwiZXhwIjoxNzYyMjk4NTk2fQ.0k1i6QPLoMAj9DxWIXhMin8DPu5WbYxGKnSfK6Y4GaE"
+              }
+            ],
+            "url": "http://localhost:8081/api/v1/usuarios/28b75dc7-7c28-46a4-ba0a-a58fe6d73a1b"
+          },
+          "response": []
         },
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"nome\": \"João T. Atualizado\",\n  \"email\": \"joao@example.com\",\n  \"login\": \"joaot\",\n  \"tipo\": \"DONO_RESTAURANTE\",\n  \"endereco\": {\n    \"rua\": \"Rua B\",\n    \"numero\": \"200\",\n    \"cidade\": \"Barbacena\",\n    \"cep\": \"36200-000\",\n    \"uf\": \"MG\"\n  }\n}"
-        }
-      }
-    },
-    {
-      "name": "Alterar senha (sucesso)",
-      "request": {
-        "method": "PATCH",
-        "header": [{ "key": "Content-Type", "value": "application/json" }],
-        "url": {
-          "raw": "http://localhost:8081/api/v1/usuarios/alterar-senha",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8081",
-          "path": ["api", "v1", "usuarios", "alterar-senha"]
+        {
+          "name": "Buscar por nome",
+          "protocolProfileBehavior": {
+            "followRedirects": true,
+            "disableUrlEncoding": false,
+            "disableCookies": false
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2FvdCIsImlhdCI6MTc2MjIxMjE5NiwiZXhwIjoxNzYyMjk4NTk2fQ.0k1i6QPLoMAj9DxWIXhMin8DPu5WbYxGKnSfK6Y4GaE"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/usuarios?nome=João",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "v1",
+                "usuarios"
+              ],
+              "query": [
+                {
+                  "key": "nome",
+                  "value": "João"
+                }
+              ]
+            }
+          },
+          "response": []
         },
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"usuarioId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"senhaAtual\": \"secret123\",\n  \"novaSenha\": \"novaSenha456\"\n}"
-        }
-      }
-    },
-    {
-      "name": "Alterar senha (senha atual incorreta)",
-      "request": {
-        "method": "PATCH",
-        "header": [{ "key": "Content-Type", "value": "application/json" }],
-        "url": {
-          "raw": "http://localhost:8081/api/v1/usuarios/alterar-senha",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8081",
-          "path": ["api", "v1", "usuarios", "alterar-senha"]
+        {
+          "name": "Atualizar usuário",
+          "protocolProfileBehavior": {
+            "followRedirects": true,
+            "disableUrlEncoding": false,
+            "disableCookies": false
+          },
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2FvdCIsImlhdCI6MTc2MjIxMjE5NiwiZXhwIjoxNzYyMjk4NTk2fQ.0k1i6QPLoMAj9DxWIXhMin8DPu5WbYxGKnSfK6Y4GaE"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"João T. Atualizado\",\n  \"email\": \"joao@example.com\",\n  \"login\": \"joaot\",\n  \"tipo\": \"CLIENTE\",\n  \"endereco\": {\n    \"rua\": \"Rua B\",\n    \"numero\": \"200\",\n    \"cidade\": \"Barbacena\",\n    \"cep\": \"36200-000\",\n    \"uf\": \"MG\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": "http://localhost:8081/api/v1/usuarios/28b75dc7-7c28-46a4-ba0a-a58fe6d73a1b"
+          },
+          "response": []
         },
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"usuarioId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"senhaAtual\": \"errada123\",\n  \"novaSenha\": \"novaSenha456\"\n}"
-        }
-      }
-    },
-    {
-      "name": "Deletar usuário",
-      "request": {
-        "method": "DELETE",
-        "url": {
-          "raw": "http://localhost:8081/api/v1/usuarios/3fa85f64-5717-4562-b3fc-2c963f66afa6",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8081",
-          "path": ["api", "v1", "usuarios", "3fa85f64-5717-4562-b3fc-2c963f66afa6"]
-        }
-      }
-    },
-    {
-      "name": "Login (válido)",
-      "request": {
-        "method": "POST",
-        "header": [
-          { "key": "Content-Type", "value": "application/json" }
-        ],
-        "url": {
-          "raw": "http://localhost:8081/api/v1/auth/login",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8081",
-          "path": ["api", "v1", "auth", "login"]
+        {
+          "name": "Alterar senha (sucesso)",
+          "protocolProfileBehavior": {
+            "followRedirects": true,
+            "disableUrlEncoding": false,
+            "disableCookies": false
+          },
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2FvdCIsImlhdCI6MTc2MjIxMjE5NiwiZXhwIjoxNzYyMjk4NTk2fQ.0k1i6QPLoMAj9DxWIXhMin8DPu5WbYxGKnSfK6Y4GaE"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"senhaAtual\": \"secret123\",\n  \"novaSenha\": \"novaSenha456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": "http://localhost:8081/api/v1/usuarios/28b75dc7-7c28-46a4-ba0a-a58fe6d73a1b/senha"
+          },
+          "response": []
         },
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"login\": \"joaot\",\n  \"senha\": \"secret123\"\n}"
-        }
-      }
-    },
-    {
-      "name": "Login (credenciais inválidas)",
-      "request": {
-        "method": "POST",
-        "header": [
-          { "key": "Content-Type", "value": "application/json" }
-        ],
-        "url": {
-          "raw": "http://localhost:8081/api/v1/auth/login",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8081",
-          "path": ["api", "v1", "auth", "login"]
+        {
+          "name": "Alterar senha (senha atual incorreta)",
+          "protocolProfileBehavior": {
+            "followRedirects": true,
+            "disableUrlEncoding": false,
+            "disableCookies": false
+          },
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2FvdCIsImlhdCI6MTc2MjIxMjE5NiwiZXhwIjoxNzYyMjk4NTk2fQ.0k1i6QPLoMAj9DxWIXhMin8DPu5WbYxGKnSfK6Y4GaE"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"senhaAtual\": \"errada123\",\n  \"novaSenha\": \"novaSenha456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": "http://localhost:8081/api/v1/usuarios/28b75dc7-7c28-46a4-ba0a-a58fe6d73a1b/senha"
+          },
+          "response": []
         },
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"login\": \"joaot\",\n  \"senha\": \"senhaErrada\"\n}"
+        {
+          "name": "Deletar usuário",
+          "protocolProfileBehavior": {
+            "followRedirects": true,
+            "disableUrlEncoding": false,
+            "disableCookies": false
+          },
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2FvdCIsImlhdCI6MTc2MjIxMjE5NiwiZXhwIjoxNzYyMjk4NTk2fQ.0k1i6QPLoMAj9DxWIXhMin8DPu5WbYxGKnSfK6Y4GaE"
+              }
+            ],
+            "url": "http://localhost:8081/api/v1/usuarios/62cceb1c-1fc1-418c-9885-f544f79c0d4c"
+          },
+          "response": []
+        },
+        {
+          "name": "Login (válido)",
+          "protocolProfileBehavior": {
+            "followRedirects": true,
+            "disableUrlEncoding": false,
+            "disableCookies": false
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"login\": \"joaot\",\n  \"senha\": \"secret123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": "http://localhost:8081/api/v1/auth/login"
+          },
+          "response": []
+        },
+        {
+          "name": "Login (credenciais inválidas)",
+          "protocolProfileBehavior": {
+            "followRedirects": true,
+            "disableUrlEncoding": false,
+            "disableCookies": false
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"login\": \"joaot\",\n  \"senha\": \"senhaErrada\"\n}",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": "http://localhost:8081/api/v1/auth/login"
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar por ID(invalido, id inexistente)",
+          "protocolProfileBehavior": {
+            "followRedirects": true,
+            "disableUrlEncoding": false,
+            "disableCookies": false
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2FvdCIsImlhdCI6MTc2MjIxMjE5NiwiZXhwIjoxNzYyMjk4NTk2fQ.0k1i6QPLoMAj9DxWIXhMin8DPu5WbYxGKnSfK6Y4GaE"
+              }
+            ],
+            "url": "http://localhost:8081/api/v1/usuarios/28b75dc7-7c28-46a4-ba0a-a58fe6d73a"
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar por ID(Token invalido)",
+          "protocolProfileBehavior": {
+            "followRedirects": true,
+            "disableUrlEncoding": false,
+            "disableCookies": false
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2FvdCIsImlhdCI6MTc2MjIxMjE5NiwiZXhwIjoxNzYyMjk4NTk2fQ.0k1i6QPLoMAj9DxWIXhMin8DPu5WbYxGKnSfK6Y4G"
+              }
+            ],
+            "url": "http://localhost:8081/api/v1/usuarios/28b75dc7-7c28-46a4-ba0a-a58fe6d73a1b"
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar por nome(nome inexistente)",
+          "protocolProfileBehavior": {
+            "followRedirects": true,
+            "disableUrlEncoding": false,
+            "disableCookies": false
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2FvdCIsImlhdCI6MTc2MjIxMjE5NiwiZXhwIjoxNzYyMjk4NTk2fQ.0k1i6QPLoMAj9DxWIXhMin8DPu5WbYxGKnSfK6Y4GaE"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/usuarios?nome=Lucas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "v1",
+                "usuarios"
+              ],
+              "query": [
+                {
+                  "key": "nome",
+                  "value": "Lucas"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar por nome(Token invalido inexistente)",
+          "protocolProfileBehavior": {
+            "followRedirects": true,
+            "disableUrlEncoding": false,
+            "disableCookies": false
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2FvdCIsImlhdCI6MTc2MjIxMjE5NiwiZXhwIjoxNzYyMjk4NTk2fQ.0k1i6QPLoMAj9DxWIXhMin8DPu5WbYxGKnSfK6Y4G"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/usuarios?nome=Lucas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "v1",
+                "usuarios"
+              ],
+              "query": [
+                {
+                  "key": "nome",
+                  "value": "Lucas"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar usuário(id inexistente)",
+          "protocolProfileBehavior": {
+            "followRedirects": true,
+            "disableUrlEncoding": false,
+            "disableCookies": false
+          },
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2FvdCIsImlhdCI6MTc2MjIxMjE5NiwiZXhwIjoxNzYyMjk4NTk2fQ.0k1i6QPLoMAj9DxWIXhMin8DPu5WbYxGKnSfK6Y4GaE"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"João T. Atualizado\",\n  \"email\": \"joao@example.com\",\n  \"login\": \"joaot\",\n  \"tipo\": \"CLIENTE\",\n  \"endereco\": {\n    \"rua\": \"Rua B\",\n    \"numero\": \"200\",\n    \"cidade\": \"Barbacena\",\n    \"cep\": \"36200-000\",\n    \"uf\": \"MG\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": "http://localhost:8081/api/v1/usuarios/28b75dc7-7c28-46a4-ba0a-a58fe6d73a"
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar usuário(campo inexistente)",
+          "protocolProfileBehavior": {
+            "followRedirects": true,
+            "disableUrlEncoding": false,
+            "disableCookies": false
+          },
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2FvdCIsImlhdCI6MTc2MjIxMjE5NiwiZXhwIjoxNzYyMjk4NTk2fQ.0k1i6QPLoMAj9DxWIXhMin8DPu5WbYxGKnSfK6Y4GaE"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"João T. Atualizado\",\n  \"email\": \"joao@example.com\",\n  \"login\": \"joaot\",\n  \"type\": \"CLIENTE\",\n  \"endereco\": {\n    \"rua\": \"Rua B\",\n    \"numero\": \"200\",\n    \"cidade\": \"Barbacena\",\n    \"cep\": \"36200-000\",\n    \"uf\": \"MG\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": "http://localhost:8081/api/v1/usuarios/28b75dc7-7c28-46a4-ba0a-a58fe6d73a1b"
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar usuário(token invalido)",
+          "protocolProfileBehavior": {
+            "followRedirects": true,
+            "disableUrlEncoding": false,
+            "disableCookies": false
+          },
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2FvdCIsImlhdCI6MTc2MjIxMjE5NiwiZXhwIjoxNzYyMjk4NTk2fQ.0k1i6QPLoMAj9DxWIXhMin8DPu5WbYxGKnSfK6Y4G"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"João T. Atualizado\",\n  \"email\": \"joao@example.com\",\n  \"login\": \"joaot\",\n  \"tipo\": \"CLIENTE\",\n  \"endereco\": {\n    \"rua\": \"Rua B\",\n    \"numero\": \"200\",\n    \"cidade\": \"Barbacena\",\n    \"cep\": \"36200-000\",\n    \"uf\": \"MG\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": "http://localhost:8081/api/v1/usuarios/28b75dc7-7c28-46a4-ba0a-a58fe6d73a1b"
+          },
+          "response": []
+        },
+        {
+          "name": "Alterar senha (token incorreto)",
+          "protocolProfileBehavior": {
+            "followRedirects": true,
+            "disableUrlEncoding": false,
+            "disableCookies": false
+          },
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2FvdCIsImlhdCI6MTc2MjIxMjE5NiwiZXhwIjoxNzYyMjk4NTk2fQ.0k1i6QPLoMAj9DxWIXhMin8DPu5WbYxGKnSfK6Y4G"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"senhaAtual\": \"errada123\",\n  \"novaSenha\": \"novaSenha456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": "http://localhost:8081/api/v1/usuarios/28b75dc7-7c28-46a4-ba0a-a58fe6d73a1b/senha"
+          },
+          "response": []
         }
-      }
+      ]
     }
   ]
 }
